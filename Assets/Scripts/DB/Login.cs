@@ -9,31 +9,62 @@ using TMPro;
 public class Login : MonoBehaviour
 {
     // Start is called before the first frame update
-    public enum LoginStatus
+    public TMP_InputField usernameInput;
+    public TMP_InputField passwordInput;
+
+    private string serverURL = "localhost:3000"; // 서버 URL로 교체
+
+    public void SignUp()
     {
-        Login
+        StartCoroutine(SendSignUpRequest(usernameInput.text, passwordInput.text));
     }
 
-    private readonly Button btnLogin;
-    private LoginStatus btnStatus;
-    public Login(Button btnLogin)
+    public void SignIn()
     {
-        this.btnLogin = btnLogin;
+        StartCoroutine(SendSignInRequest(usernameInput.text, passwordInput.text));
     }
 
-    public LoginStatus GetBtnStatus()
+    IEnumerator SendSignUpRequest(string username, string password)
     {
-        return btnStatus;
+        string url = $"{serverURL}/signup";
+        WWWForm form = new WWWForm();
+        form.AddField("username", username);
+        form.AddField("password", password);
+
+        using (UnityWebRequest request = UnityWebRequest.Post(url, form))
+        {
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                Debug.Log("SignUp successful!");
+            }
+            else
+            {
+                Debug.LogError($"SignUp failed: {request.error}");
+            }
+        }
     }
 
-    void Start()
+    IEnumerator SendSignInRequest(string username, string password)
     {
-        
-    }
+        string url = $"{serverURL}/login";
+        WWWForm form = new WWWForm();
+        form.AddField("username", username);
+        form.AddField("password", password);
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        using (UnityWebRequest request = UnityWebRequest.Post(url, form))
+        {
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                Debug.Log("SignIn successful!");
+            }
+            else
+            {
+                Debug.LogError($"SignIn failed: {request.error}");
+            }
+        }
     }
 }
