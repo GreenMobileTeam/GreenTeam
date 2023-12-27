@@ -6,66 +6,38 @@ using TMPro;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
-    public Button loginBtn;
     public TextMeshProUGUI IDtext;
     public TextMeshProUGUI connetState;
     public TextMeshProUGUI lenghtText;
 
+    int roomNum = 1;
+
     private void Start()
     {
         PhotonNetwork.ConnectUsingSettings();
-        loginBtn.interactable = false;
         connetState.text = "Connectiong to Master Server...";
     }
 
     private void Update()
     {
-        if (IDtext.text.Length <= 1 || IDtext.text.Length >10)
+        if (IDtext.text.Length <= 1 || IDtext.text.Length >20)
         {
-            loginBtn.interactable = false;
             lenghtText.text = "Text length: 2~10";
         }
         else {
-            loginBtn.interactable = true;
-            lenghtText.text = "Good";
-        }
-    }
-
-    public void Connect()
-    {
-        //if(IDtext.text.Equals(""))
-        if(IDtext.text.Length == 0)
-        {
-            return;
-        }
-        else
-        {
-            PhotonNetwork.LocalPlayer.NickName = IDtext.text;
-            loginBtn.interactable = false;
-            if (PhotonNetwork.IsConnected)
-            {
-                connetState.text = "Connecting to room...";
-                PhotonNetwork.JoinRandomRoom();
-            }
-            else
-            {
-                connetState.text = "Offline: failed to connect.\nReconnecting...";
-                PhotonNetwork.ConnectUsingSettings();
-            }
+            lenghtText.text = "Available name";
         }
     }
 
     public override void OnConnectedToMaster()
     {
         //base.OnConnectedToMaster();
-        loginBtn.interactable = true;
         connetState.text = "Online: connect to master server";
     }
 
     public override void OnDisconnected(DisconnectCause cause)
     {
         //base.OnDisconnected(cause);
-        loginBtn.interactable = false;
         connetState.text = "Offline: failed to connect.\nReconnecting...";
         PhotonNetwork.ConnectUsingSettings();
     }
@@ -81,6 +53,73 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         //base.OnJoinedRoom();
         connetState.text = "Succes to join room";
-        PhotonNetwork.LoadLevel("Main");
+        switch (roomNum)
+        {
+            case 1:
+                PhotonNetwork.LoadLevel("ChatRoom1");
+                break;
+            case 2:
+                PhotonNetwork.LoadLevel("ChatRoom2");
+                break;
+            case 3:
+                PhotonNetwork.LoadLevel("ChatRoom3");
+                break;
+            default:
+                break;
+        }
+    }
+
+    //rooms
+    public void ConnectRoom1()
+    {
+        if (PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.LocalPlayer.NickName = IDtext.text;
+            connetState.text = "Connecting to ChatRoom1...";
+            //PhotonNetwork.LoadLevel("ChatRoom1");
+            roomNum = 1;
+            PhotonNetwork.JoinRandomRoom();
+        }
+        else
+        {
+            connetState.text = "Offline: failed to connect.\nReconnecting...";
+            PhotonNetwork.ConnectUsingSettings();
+        }
+    }
+
+    public void ConnectRoom2()
+    {
+        if (PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.LocalPlayer.NickName = IDtext.text;
+
+            connetState.text = "Connecting to ChatRoom2...";
+            //PhotonNetwork.LoadLevel("ChatRoom2");
+            roomNum = 2;
+            PhotonNetwork.JoinRandomRoom();
+        }
+        else
+        {
+            connetState.text = "Offline: failed to connect.\nReconnecting...";
+            PhotonNetwork.ConnectUsingSettings();
+        }
+    }
+
+    public void ConnectRoom3()
+    {
+        if (PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.LocalPlayer.NickName = IDtext.text;
+
+            connetState.text = "Connecting to ChatRoom3...";
+            //PhotonNetwork.LoadLevel("ChatRoom3");
+            roomNum = 3;
+            PhotonNetwork.JoinRandomRoom();
+        }
+        else
+        {
+            connetState.text = "Offline: failed to connect.\nReconnecting...";
+            PhotonNetwork.ConnectUsingSettings();
+        }
     }
 }
