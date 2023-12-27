@@ -5,11 +5,11 @@ using UnityEngine.EventSystems;
 
 public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
-    [SerializeField] private GameObject move_Player;
     [SerializeField] private RectTransform rect_JoystickBG;
     [SerializeField] private RectTransform rect_Joystick;
     [SerializeField] private float moveSpeed;
 
+    private RespawnGhost respawnGhost; // 생성된 고스트 불러옴
     private float joystick_Radius; // rect_JoystickBG의 반지름
     private bool isTouch = false;
     private Vector3 mVector;
@@ -17,14 +17,18 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     void Start()
     {
         joystick_Radius = rect_JoystickBG.rect.width * 0.5f;
+        if (respawnGhost == null)
+        {
+            respawnGhost = FindObjectOfType<RespawnGhost>();
+        }
     }
 
     void Update()
     {
         if (isTouch)
         {
-            move_Player.transform.position += mVector;
-            move_Player.transform.LookAt(move_Player.transform.position + mVector);
+            respawnGhost.playerGhost.transform.position += mVector;
+            respawnGhost.playerGhost.transform.LookAt(respawnGhost.playerGhost.transform.position + mVector);
         }
     }
 
