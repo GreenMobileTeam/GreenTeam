@@ -14,7 +14,7 @@ public class SignupManager : MonoBehaviour
 
     public Button signupButn;
 
-    private string serverURL = "localhost:3000";
+    private string serverURL = "https://soft-actors-shine.loca.lt";
 
     private bool nullCheck;
     private bool pwCheck;

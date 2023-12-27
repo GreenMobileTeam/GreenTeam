@@ -14,7 +14,7 @@ public class LoginManager : MonoBehaviour
 
     private bool nullCheck;
 
-    private string serverURL = "http://localhost:3000"; // 서버 URL로 교체해야됨
+    private string serverURL = "https://soft-actors-shine.loca.lt";
 
     private void Awake()
     {
