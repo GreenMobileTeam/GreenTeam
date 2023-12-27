@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class SignupManager : MonoBehaviour
@@ -11,10 +12,35 @@ public class SignupManager : MonoBehaviour
     public TMP_InputField passwordCheckInput;
     public TMP_InputField nicknameInput;
 
+    public Button signupButn;
+
     private string serverURL = "localhost:3000";
 
     private bool nullCheck;
     private bool pwCheck;
+
+    public bool nickCheck;
+    public bool userCheck;
+
+    private void Awake()
+    {
+        nickCheck = true;
+        userCheck = true;
+        pwCheck = false;
+        nullCheck = false;
+    }
+
+    private void Update()
+    {
+        if(nullCheck = NullCheck() && !nickCheck && !userCheck)
+        {
+            signupButn.interactable = true;
+        }
+        else
+        {
+            signupButn.interactable = false;
+        }
+    }
 
     public void SignUp()
     {
@@ -29,7 +55,6 @@ public class SignupManager : MonoBehaviour
         if (string.IsNullOrEmpty(usernameInput.text) || string.IsNullOrEmpty(passwordInput.text) 
             || string.IsNullOrEmpty(passwordCheckInput.text)  || string.IsNullOrEmpty(nicknameInput.text))
         {
-            Debug.LogError("모든 필드를 입력하세요.");
             return false;
         }
         return true;
@@ -40,13 +65,15 @@ public class SignupManager : MonoBehaviour
         if (passwordInput.text != passwordCheckInput.text)
         {
             Debug.LogError("비밀번호가 일치하지 않습니다.");
+            passwordInput.text = "";
+            passwordCheckInput.text = "";
             return false;
         }
         return true;
     }
-    IEnumerator CheckDuplicate(string type, string value)
+    IEnumerator CheckDuplicate(string type, TMP_InputField value)
     {
-        string url = $"{serverURL}/checkDuplicate/{type}/{value}";
+        string url = $"{serverURL}/checkDuplicate/{type}/{value.text}";
         using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
             yield return request.SendWebRequest();
@@ -56,6 +83,24 @@ public class SignupManager : MonoBehaviour
                 ResponseData responseData = JsonUtility.FromJson<ResponseData>(request.downloadHandler.text);
                 bool isDuplicate = responseData.isDuplicate;
                 Debug.Log($"{type}이 중복됨: {isDuplicate}");
+
+                if (type == "username")
+                {
+                    userCheck = isDuplicate;
+                }
+                else if (type == "nickname")
+                {
+                    nickCheck = isDuplicate;
+                }
+
+                if (isDuplicate)
+                {
+                    value.text = "";
+                }
+                else
+                {
+
+                }
             }
             else
             {
@@ -66,12 +111,12 @@ public class SignupManager : MonoBehaviour
 
     public void CheckUserNameButton()
     {
-        StartCoroutine(CheckDuplicate("username", usernameInput.text));
+        StartCoroutine(CheckDuplicate("username", usernameInput));
     }
 
     public void CheckNickNameButton()
     {
-        StartCoroutine(CheckDuplicate("nickname", nicknameInput.text));
+        StartCoroutine(CheckDuplicate("nickname", nicknameInput));
     }
 
 
@@ -87,36 +132,31 @@ public class SignupManager : MonoBehaviour
         {
             yield return request.SendWebRequest();
 
-            nullCheck = NullCheck();
             pwCheck = ValidateInput();
-
-            if(nullCheck)
+          
+            if (pwCheck)
             {
-                if(pwCheck)
+                if (request.result == UnityWebRequest.Result.Success)
                 {
-                    if (request.result == UnityWebRequest.Result.Success)
-                    {
-                        Debug.Log("회원가입 성공!");
-                    }
-                    else
-                    {
-                        Debug.LogError($"회원가입 실패: {request.error}");
-                    }
+                    Debug.Log("회원가입 성공!");
+                    ReturnLoginScene();
                 }
                 else
                 {
-                    //Debug.Log("패스워드 불일치");
+                    Debug.LogError($"회원가입 실패: {request.error}");
                 }
-            }
-            else
-            {
-                //Debug.Log("칸이 비어있음");
             }
         }
     }
+    
     public class ResponseData
     {
         public bool isDuplicate;
+    }
+
+    public void ReturnLoginScene()
+    {
+        SceneManager.LoadScene("login");
     }
 
 }
