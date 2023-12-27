@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 22.476807}
+  m_AnchoredPosition: {x: 0, y: 14}
   m_SizeDelta: {x: 0, y: -44.9537}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1501088347049437923
@@ -128,7 +128,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 9.428833, y: 0, z: 11.832397, w: 0}
+  m_margin: {x: 9.428833, y: 0, z: 11.832397, w: 14.888245}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -255,7 +255,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3433085735628102907, guid: 0358f0bc4bd26d248a94b7e424609230, type: 3}
+      - m_Target: {fileID: 4402805076353574735, guid: 0358f0bc4bd26d248a94b7e424609230, type: 3}
         m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
         m_MethodName: RoomSelect
         m_Mode: 1

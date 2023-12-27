@@ -8,6 +8,7 @@ using TMPro;
 
 public class ChatManager : MonoBehaviourPunCallbacks
 {
+    public int roomNumber;
     public Button sendBtn;
     public TextMeshProUGUI chatLog;
     public TextMeshProUGUI chattingList;
@@ -54,6 +55,8 @@ public class ChatManager : MonoBehaviourPunCallbacks
     void chatterUpdate()
     {
         chatters = "Player List\n";
+        Debug.Log(PhotonNetwork.PlayerList.Length);
+        PlayerPrefs.SetInt("Room" + roomNumber, PhotonNetwork.PlayerList.Length);
         foreach (Player p in PhotonNetwork.PlayerList)
         {
             string s = "";
@@ -80,6 +83,9 @@ public class ChatManager : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         //base.OnPlayerLeftRoom(otherPlayer);
+        int n = PlayerPrefs.GetInt("Room" + roomNumber);
+        PlayerPrefs.SetInt("Room" + roomNumber, n - 1); 
+
         string msg = string.Format("<color=#ff0000>[{0}]¥‘¿Ã ≈¿Â«œºÃΩ¿¥œ¥Ÿ.</color>", otherPlayer.NickName);
         ReceiveMsg(msg);
     }
