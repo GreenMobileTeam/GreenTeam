@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RespawnGhost : MonoBehaviour
 {
+    /*
     public GameObject[] charPrefabs;
     public GameObject playerGhost;
 
@@ -12,4 +13,5 @@ public class RespawnGhost : MonoBehaviour
         playerGhost = Instantiate(charPrefabs[(int)CharacterManager.instance.currentCharacter]);
         playerGhost.transform.position = transform.position;
     }
+    */
 }

@@ -9,7 +9,8 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     [SerializeField] private RectTransform rect_Joystick;
     [SerializeField] private float moveSpeed;
 
-    private RespawnGhost respawnGhost; // 생성된 고스트 불러옴
+    private PhotonManager photonManager;
+    // private RespawnGhost respawnGhost; // 생성된 고스트 불러옴
     private float joystick_Radius; // rect_JoystickBG의 반지름
     private bool isTouch = false;
     private Vector3 mVector;
@@ -17,9 +18,9 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     void Start()
     {
         joystick_Radius = rect_JoystickBG.rect.width * 0.5f;
-        if (respawnGhost == null)
+        if (photonManager == null)
         {
-            respawnGhost = FindObjectOfType<RespawnGhost>();
+            photonManager = FindObjectOfType<PhotonManager>();
         }
     }
 
@@ -27,8 +28,8 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     {
         if (isTouch)
         {
-            respawnGhost.playerGhost.transform.position += mVector;
-            respawnGhost.playerGhost.transform.LookAt(respawnGhost.playerGhost.transform.position + mVector);
+            photonManager.playerGhost.transform.position += mVector;
+            photonManager.playerGhost.transform.LookAt(photonManager.playerGhost.transform.position + mVector);
         }
     }
 
