@@ -57,7 +57,6 @@ public class ChatManager : MonoBehaviourPunCallbacks
     void chatterUpdate()
     {
         chatters = "Player List\n";
-        Debug.Log(PhotonNetwork.PlayerList.Length);
         PlayerPrefs.SetInt("Room" + roomNumber, PhotonNetwork.PlayerList.Length);
         foreach (Player p in PhotonNetwork.PlayerList)
         {
@@ -85,9 +84,6 @@ public class ChatManager : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         //base.OnPlayerLeftRoom(otherPlayer);
-        int n = PlayerPrefs.GetInt("Room" + roomNumber);
-        PlayerPrefs.SetInt("Room" + roomNumber, n - 1); 
-
         string msg = string.Format("<color=#ff0000>[{0}]¥‘¿Ã ≈¿Â«œºÃΩ¿¥œ¥Ÿ.</color>", otherPlayer.NickName);
         ReceiveMsg(msg);
     }
@@ -100,7 +96,40 @@ public class ChatManager : MonoBehaviourPunCallbacks
 
     void MsgDetect()   //∫Òº”æÓ « ≈Õ
     {
-        
+        char[] worr = inMsg.ToCharArray();
+        Debug.Log(inMsg);
+
+        for(int i = 0; i < wordList.Length; i++)
+        {
+            char[] filter = wordList[i].ToCharArray();
+            Debug.Log(filter[0]);
+            for(int j = 0; j < worr.Length-1; j++)
+            {
+                if (worr[j] == filter[0])
+                {
+                    if (filter.Length == 1)
+                    {
+                        Debug.Log(worr[j] + "-> ≥…");
+                        worr[j] = '≥…';
+                    }
+                    else
+                    {
+                        if(worr[j+1] == filter[1])
+                        {
+                            Debug.Log(worr[j] + worr[j + 1] + "-> æﬂøÀ");
+                            worr[j] = 'æﬂ';
+                            worr[j + 1] = 'øÀ';
+                        }
+                    }
+                }
+            }
+            if (worr[worr.Length - 1] == filter[0] && wordList[i].Length ==1)
+            {
+                worr[worr.Length - 1] = '¢Ω';
+            }
+        }
+
+        inMsg = new string(worr);
     }
 
     [PunRPC]
