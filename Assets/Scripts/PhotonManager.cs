@@ -8,13 +8,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 {
     public GameObject playerGhost;
     private readonly string version = "1.0";
-    private string userId = "Yong";
+    //private string userId = "Yong";
 
     private void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.GameVersion = version;
-        PhotonNetwork.NickName = userId;
+        //PhotonNetwork.NickName = PlayerPrefs.GetString("Name");
         Debug.Log(PhotonNetwork.SendRate);
         PhotonNetwork.ConnectUsingSettings();
     }
@@ -58,7 +58,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         foreach(var player in PhotonNetwork.CurrentRoom.Players)
         {
-            Debug.Log($"{player.Value.NickName}, {player.Value.ActorNumber}");
+            //Debug.Log($"{player.Value.NickName}, {player.Value.ActorNumber}");
 
             Transform spawnpoint = GameObject.Find("SpawnPoint").GetComponent<Transform>();
 

@@ -28,6 +28,6 @@ public class ScreenResolution : MonoBehaviour
             float newHeight = ((float)deviceWidth / deviceHeight) / ((float)setWidth / setHeight);
             Camera.main.rect = new Rect(0f, (1f - newHeight) / 2f, 1f, newHeight);
         }
-        Screen.SetResolution(setWidth, setHeight, false);
+        //Screen.SetResolution(setWidth, setHeight, false);
     }
 }
