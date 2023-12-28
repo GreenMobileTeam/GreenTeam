@@ -15,7 +15,7 @@ public class LoginManager : MonoBehaviour
     private bool nullCheck;
     public GameObject popup;
 
-    private string serverURL = "https://lemon-badgers-pay.loca.lt";
+    private string serverURL = "https://solid-apes-smile.loca.lt";
 
     private void Awake()
     {
@@ -83,7 +83,7 @@ public class LoginManager : MonoBehaviour
                     {
                         Debug.Log("로그인 성공!!");
                         OnLoginSuccess(username);
-                        SceneManager.LoadScene("lobby");
+                        SceneManager.LoadScene("Lobby_A");
                     }
                     else if (response.message == "Invalid username" || response.message == "Invalid password")
                     {
