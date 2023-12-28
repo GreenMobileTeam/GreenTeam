@@ -20,13 +20,13 @@ public class ChatManager : MonoBehaviourPunCallbacks
     string[] wordList = { "시발", "새끼", "섹스", "병신", "애미",
                                         "느금", "애비", "년", "좆", "ㅗ"};
 
-    // Start is called before the first frame update
     void Start()
     {
         PhotonNetwork.IsMessageQueueRunning = true;
         //scroll_rect = GameObject.FindObjectOfType();
         color = PlayerPrefs.GetString("Mycolor");
     }
+
     public void SendButtonOnClicked()
     {
         if (input.text.Equals("")) { Debug.Log("Empty"); return; }
@@ -46,12 +46,14 @@ public class ChatManager : MonoBehaviourPunCallbacks
         input.ActivateInputField(); // 반대는 input.select(); (반대로 토글)
         input.text = "";
     }
+
     void Update()
     {
         color = PlayerPrefs.GetString("Mycolor");
         chatterUpdate();
-        if (Input.GetKeyDown(KeyCode.Return) && !input.isFocused) SendButtonOnClicked();
+        if (Input.GetKeyDown(KeyCode.Return)) SendButtonOnClicked();
     }
+
     void chatterUpdate()
     {
         chatters = "Player List\n";
@@ -90,7 +92,13 @@ public class ChatManager : MonoBehaviourPunCallbacks
         ReceiveMsg(msg);
     }
 
-    void MsgDetect()
+    public void GoOut()
+    {
+        PhotonNetwork.LoadLevel("lobby");
+
+    }
+
+    void MsgDetect()   //비속어 필터
     {
         
     }
