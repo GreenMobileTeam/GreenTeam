@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Text.RegularExpressions;
 
 public class InputFieldLimit : MonoBehaviour
 {
     private TMP_InputField inputField;
-    public int maxCharacterLimit;
 
     // Start is called before the first frame update
     private void Awake()
@@ -16,14 +16,26 @@ public class InputFieldLimit : MonoBehaviour
 
     void Start()
     {
-        inputField.onValueChanged.AddListener(OnInputFieldValueChanged);
+        inputField.onValueChanged.AddListener(OnInputFieldValueLimit);
     }
 
-    void OnInputFieldValueChanged(string newText)
+    void OnInputFieldValueLimit(string newText)
     {
-        if (newText.Length > maxCharacterLimit)
-        {
-            inputField.text = newText.Substring(0, maxCharacterLimit);
-        }
+        if(gameObject.name != "Nickname")
+            inputField.text = Regex.Replace(newText, @"[^0-9a-zA-Z°¡-ÆR¤¡-¤¾¤¿-¤Ó!@#$%^&*()_+]", "");
+        else
+            inputField.text = Regex.Replace(newText, @"[^0-9a-zA-Z°¡-ÆR¤¡-¤¾¤¿-¤Ó]", "");
     }
+
+    public void OnInputKoreanLimit()
+    {
+            if (inputField.isFocused)
+            {
+                Input.imeCompositionMode = IMECompositionMode.Off;
+            }
+            else
+            {
+                Input.imeCompositionMode = IMECompositionMode.Auto;
+            }
+        }
 }
