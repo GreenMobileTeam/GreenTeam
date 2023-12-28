@@ -15,7 +15,7 @@ public class LoginManager : MonoBehaviour
     private bool nullCheck;
     public GameObject popup;
 
-    private string serverURL = "https://vast-steaks-agree.loca.lt";
+    private string serverURL = "https://lemon-badgers-pay.loca.lt";
 
     private void Awake()
     {
