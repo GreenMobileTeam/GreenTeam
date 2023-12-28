@@ -13,8 +13,9 @@ public class LoginManager : MonoBehaviour
     public Button loginButn;
 
     private bool nullCheck;
+    public GameObject popup;
 
-    private string serverURL = "https://soft-actors-shine.loca.lt";
+    private string serverURL = "https://vast-steaks-agree.loca.lt";
 
     private void Awake()
     {
@@ -49,7 +50,7 @@ public class LoginManager : MonoBehaviour
     }
 
 
-    public void SignIn()
+    public void LogIn()
     {
         StartCoroutine(SendLogInRequest(usernameInput.text, passwordInput.text));
     }
@@ -84,13 +85,9 @@ public class LoginManager : MonoBehaviour
                         OnLoginSuccess(username);
                         SceneManager.LoadScene("lobby");
                     }
-                    else if (response.message == "Invalid username")
+                    else if (response.message == "Invalid username" || response.message == "Invalid password")
                     {
-                        Debug.Log("유효하지 않은 사용자명");
-                    }
-                    else if (response.message == "Invalid password")
-                    {
-                        Debug.Log("유효하지 않은 비밀번호");
+                        popup.SetActive(true);
                     }
                     else
                     {
@@ -144,6 +141,11 @@ public class LoginManager : MonoBehaviour
     void OnLoginSuccess(string username)
     {
         StartCoroutine(GetLoginInfo(username));
+    }
+
+    public void PopUpClose()
+    {
+        popup.SetActive(false);
     }
 
 }

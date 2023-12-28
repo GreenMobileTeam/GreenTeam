@@ -12,9 +12,12 @@ public class SignupManager : MonoBehaviour
     public TMP_InputField passwordCheckInput;
     public TMP_InputField nicknameInput;
 
+    public TMP_Text usernameCheck;
+    public TMP_Text nicknameCheck;
+
     public Button signupButn;
 
-    private string serverURL = "https://soft-actors-shine.loca.lt";
+    private string serverURL = "https://vast-steaks-agree.loca.lt";
 
     private bool nullCheck;
     private bool pwCheck;
@@ -32,7 +35,29 @@ public class SignupManager : MonoBehaviour
 
     private void Update()
     {
-        if(nullCheck = NullCheck() && !nickCheck && !userCheck)
+        if(!nickCheck)
+        {
+            nicknameCheck.text = "o";
+            nicknameCheck.color = Color.green;
+        }
+        else
+        {
+            nicknameCheck.text = "x";
+            nicknameCheck.color = Color.red;
+        }
+
+        if (!userCheck)
+        {
+            usernameCheck.text = "o";
+            usernameCheck.color = Color.green;
+        }
+        else
+        {
+            usernameCheck.text = "x";
+            usernameCheck.color = Color.red;
+        }
+
+        if (nullCheck = NullCheck() && !nickCheck && !userCheck)
         {
             signupButn.interactable = true;
         }
