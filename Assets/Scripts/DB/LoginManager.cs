@@ -83,7 +83,7 @@ public class LoginManager : MonoBehaviour
                     {
                         Debug.Log("로그인 성공!!");
                         OnLoginSuccess(username);
-                        SceneManager.LoadScene("Lobby_A");
+                        //SceneManager.LoadScene("Lobby_A");
                     }
                     else if (response.message == "Invalid username" || response.message == "Invalid password")
                     {
@@ -125,6 +125,10 @@ public class LoginManager : MonoBehaviour
                
                 string savedNickname = PlayerPrefs.GetString("Nickname", "DefaultNickname");
                 Debug.Log("현재 닉네임: " + savedNickname);
+                PlayerPrefs.SetString("Name", savedNickname);  //혜진
+                PlayerPrefs.SetInt("IsGuest", 0);
+                Debug.Log(PlayerPrefs.GetString("Name"));
+                SceneManager.LoadScene("Lobby_A");
             }
             else
             {
@@ -148,4 +152,9 @@ public class LoginManager : MonoBehaviour
         popup.SetActive(false);
     }
 
+    public void GuestLogin()
+    {
+        SceneManager.LoadScene("Lobby_A");
+        PlayerPrefs.SetInt("IsGuest", 1);
+    }
 }

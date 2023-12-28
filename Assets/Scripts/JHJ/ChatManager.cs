@@ -90,7 +90,7 @@ public class ChatManager : MonoBehaviourPunCallbacks
 
     public void GoOut()
     {
-        PhotonNetwork.LoadLevel("lobby");
+        PhotonNetwork.LoadLevel("Lobby_A");
 
     }
 
