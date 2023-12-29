@@ -12,19 +12,24 @@ public class ChatManager : MonoBehaviourPunCallbacks
     public Button sendBtn;
     public TextMeshProUGUI chatLog;
     public TextMeshProUGUI chattingList;
+    public TextMeshProUGUI filterWord;
     public TMP_InputField input;
     public ScrollRect scroll_rect;
     string chatters;
     string color;
     string inMsg;
-    string[] wordList = { "시발", "새끼", "섹스", "병신", "애미",
-                                        "느금", "애비", "년", "좆", "ㅗ"};
+    string[] wordList;
 
     void Start()
     {
+        wordList = filterWord.text.Split(", ");
         PhotonNetwork.IsMessageQueueRunning = true;
         //scroll_rect = GameObject.FindObjectOfType();
-        color = PlayerPrefs.GetString("Mycolor");
+        if (!PlayerPrefs.HasKey("Mycolor"))
+            color = "FFFFFF";
+        else
+            color = PlayerPrefs.GetString("Mycolor");
+
     }
 
     public void SendButtonOnClicked()

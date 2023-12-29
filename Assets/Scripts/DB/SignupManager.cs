@@ -18,7 +18,7 @@ public class SignupManager : MonoBehaviour
 
     public Button signupButn;
 
-    private string serverURL = "https://tangy-spies-yell.loca.lt";
+    private string serverURL = "https://cute-pens-attack.loca.lt";
 
     private bool nullCheck;
     private bool pwCheck;
