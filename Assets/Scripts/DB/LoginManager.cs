@@ -15,7 +15,7 @@ public class LoginManager : MonoBehaviour
     private bool nullCheck;
     public GameObject popup;
 
-    private string serverURL = "https://tangy-spies-yell.loca.lt";
+    private string serverURL = "https://cute-pens-attack.loca.lt";
 
     private void Awake()
     {
