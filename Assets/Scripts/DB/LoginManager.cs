@@ -54,7 +54,6 @@ public class LoginManager : MonoBehaviour
         StartCoroutine(SendLogInRequest(usernameInput.text, passwordInput.text));
     }
 
-  
     IEnumerator SendLogInRequest(string username, string password)
     {
         string url = $"{serverURL}/login";
@@ -76,6 +75,8 @@ public class LoginManager : MonoBehaviour
 
                     if (response.message == "success")
                     {
+                        SessionManager.instance.LogOut();
+
                         OnLoginSuccess(username);
                         SceneManager.LoadScene("Lobby_A");
                     }
