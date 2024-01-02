@@ -75,7 +75,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
 
     void StopToWall()
     {
-        Debug.DrawRay(photonManager.playerGhost.transform.position, photonManager.playerGhost.transform.forward * 2, Color.green);
+        // Debug.DrawRay(photonManager.playerGhost.transform.position, photonManager.playerGhost.transform.forward * 2, Color.green);
         isBorder = Physics.Raycast(photonManager.playerGhost.transform.position, photonManager.playerGhost.transform.forward, 2, LayerMask.GetMask("Wall"));
     }
 }
