@@ -135,6 +135,10 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3639158296064875432, guid: c924f13d189efe743908de073741a4fa, type: 3}
+      propertyPath: sceneViewId
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4810496886502207305, guid: c924f13d189efe743908de073741a4fa, type: 3}
       propertyPath: m_LocalScale.x
       value: 5
@@ -219,6 +223,10 @@ PrefabInstance:
     - target: {fileID: 4628876682445906812, guid: 8005b40b5f2d1094593f23034690cd6b, type: 3}
       propertyPath: m_Name
       value: "1\uBC88\uBC29"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6120438746902434009, guid: 8005b40b5f2d1094593f23034690cd6b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Room1Secelct
       objectReference: {fileID: 0}
     - target: {fileID: 8145524129645829153, guid: 8005b40b5f2d1094593f23034690cd6b, type: 3}
       propertyPath: m_Pivot.x
@@ -322,6 +330,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GhostA
       objectReference: {fileID: 0}
+    - target: {fileID: 992610961339753541, guid: 8630843cc477aa84a80429e2c4f40ed6, type: 3}
+      propertyPath: sceneViewId
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6159765595209529533, guid: 8630843cc477aa84a80429e2c4f40ed6, type: 3}
       propertyPath: m_LocalScale.x
       value: 5
@@ -373,6 +385,10 @@ PrefabInstance:
     - target: {fileID: 6159765595209529533, guid: 8630843cc477aa84a80429e2c4f40ed6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6845411494723784826, guid: 8630843cc477aa84a80429e2c4f40ed6, type: 3}
+      propertyPath: sceneViewId
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6894758616458720822, guid: 8630843cc477aa84a80429e2c4f40ed6, type: 3}
       propertyPath: m_UseGravity
@@ -535,6 +551,10 @@ PrefabInstance:
     - target: {fileID: 4628876682445906812, guid: 8005b40b5f2d1094593f23034690cd6b, type: 3}
       propertyPath: m_Name
       value: "3\uBC88\uBC29"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6120438746902434009, guid: 8005b40b5f2d1094593f23034690cd6b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Room3Secelct
       objectReference: {fileID: 0}
     - target: {fileID: 8145524129645829153, guid: 8005b40b5f2d1094593f23034690cd6b, type: 3}
       propertyPath: m_Pivot.x
@@ -1394,6 +1414,10 @@ PrefabInstance:
     - target: {fileID: 4628876682445906812, guid: 8005b40b5f2d1094593f23034690cd6b, type: 3}
       propertyPath: m_Name
       value: "2\uBC88\uBC29"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6120438746902434009, guid: 8005b40b5f2d1094593f23034690cd6b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Room2Secelct
       objectReference: {fileID: 0}
     - target: {fileID: 8145524129645829153, guid: 8005b40b5f2d1094593f23034690cd6b, type: 3}
       propertyPath: m_Pivot.x
@@ -3968,6 +3992,10 @@ PrefabInstance:
     - target: {fileID: 5498640685932101162, guid: 71e3a4d65b484be428c22f37dbd7e000, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5623874860786363969, guid: 71e3a4d65b484be428c22f37dbd7e000, type: 3}
+      propertyPath: sceneViewId
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6554067406310919587, guid: 71e3a4d65b484be428c22f37dbd7e000, type: 3}
       propertyPath: m_UseGravity

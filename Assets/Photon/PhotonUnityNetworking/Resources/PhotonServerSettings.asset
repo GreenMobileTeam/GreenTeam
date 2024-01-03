@@ -16,7 +16,7 @@ MonoBehaviour:
     AppIdRealtime: 53927a87-33cc-44a6-a72c-bd3b6ef6acfb
     AppIdFusion: 
     AppIdChat: 
-    AppIdVoice: 
+    AppIdVoice: be626d07-f425-4a63-b661-6d35728895b2
     AppVersion: 
     UseNameServer: 1
     FixedRegion: 
@@ -45,5 +45,5 @@ MonoBehaviour:
   - ChangeColour
   - HeresWhy
   DisableAutoOpenWizard: 1
-  ShowSettings: 0
+  ShowSettings: 1
   DevRegionSetOnce: 1
