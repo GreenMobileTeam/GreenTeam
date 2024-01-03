@@ -3193,7 +3193,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: SessionManager
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5885040626783133029, guid: af8bbccfc35813a44807ad10cc061945, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

@@ -26,7 +26,7 @@ public class SessionManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(2); // 60초마다 세션 상태 확인
+            yield return new WaitForSeconds(1); // 60초마다 세션 상태 확인
 
             // 세션 상태 확인을 위한 요청 보내기
             StartCoroutine(SendCheckSessionRequest());
@@ -49,29 +49,22 @@ public class SessionManager : MonoBehaviour
 
                 if (response.isLoggedIn)
                 {
-                    // 세션이 유효한 경우
                     Debug.Log("세션 유효. 현재 사용자: " + response.username);
                 }
                 else
                 {
-                    // 세션이 만료된 경우
                     Debug.Log("세션 만료. 로그아웃 처리 등을 수행하세요.");
 
-                    // 클라이언트에서의 로그아웃 처리 (세션 정보 초기화 등)
                     LogOut();
                 }
             }
             else if (request.responseCode == 401)
             {
-                // 401 상태 코드인 경우 (세션 만료)
                 Debug.Log("세션 만료. 로그아웃 처리 등을 수행하세요.");
-
-                // 클라이언트에서의 로그아웃 처리 (세션 정보 초기화 등)
                 LogOut();
             }
             else
             {
-                // 서버 통신 오류 처리
                 Debug.LogError("세션 확인 요청 실패: " + request.error);
             }
         }
@@ -108,7 +101,8 @@ public class SessionManager : MonoBehaviour
             if (request.result == UnityWebRequest.Result.Success)
             {
                 Debug.Log("서버 측 로그아웃 성공");
-                PlayerPrefs.SetInt("IsGuest", 0);
+                PlayerPrefs.DeleteAll();
+                SceneManager.LoadScene("login");
             }
             else
             {
@@ -116,4 +110,5 @@ public class SessionManager : MonoBehaviour
             }
         }
     }
+
 }

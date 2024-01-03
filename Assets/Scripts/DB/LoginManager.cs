@@ -75,8 +75,6 @@ public class LoginManager : MonoBehaviour
 
                     if (response.message == "success")
                     {
-                        SessionManager.instance.LogOut();
-
                         OnLoginSuccess(username);
                         SceneManager.LoadScene("Lobby_A");
                     }
