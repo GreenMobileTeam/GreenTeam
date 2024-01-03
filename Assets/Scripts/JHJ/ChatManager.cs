@@ -38,6 +38,7 @@ public class ChatManager : MonoBehaviourPunCallbacks
         string msg = "";
         inMsg = input.text;
         MsgDetect();
+        PlayerPrefs.SetString("Chat", inMsg);
         if (PhotonNetwork.IsMasterClient)  //방장이라면
         {
             msg = string.Format("<color=#{0}>[☆{1}] {2}</color>", color, PhotonNetwork.LocalPlayer.NickName, inMsg);
@@ -46,6 +47,7 @@ public class ChatManager : MonoBehaviourPunCallbacks
         {
             msg = string.Format("<color=#{0}>[{1}]</color> {2}", color, PhotonNetwork.LocalPlayer.NickName, inMsg);
         }
+        PlayerPrefs.SetString("Chat", "");
         photonView.RPC("ReceiveMsg", RpcTarget.OthersBuffered, msg);
         ReceiveMsg(msg);
         input.ActivateInputField(); // 반대는 input.select(); (반대로 토글)
@@ -57,6 +59,15 @@ public class ChatManager : MonoBehaviourPunCallbacks
         color = PlayerPrefs.GetString("Mycolor");
         chatterUpdate();
         if (Input.GetKeyDown(KeyCode.Return)) SendButtonOnClicked();
+
+        if(input.text.Length > 0)
+        {
+            PlayerPrefs.SetInt("IsChatting", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("IsChatting", 0);
+        }
     }
 
     void chatterUpdate()
@@ -102,12 +113,12 @@ public class ChatManager : MonoBehaviourPunCallbacks
     void MsgDetect()   //비속어 필터
     {
         char[] worr = inMsg.ToCharArray();
-        Debug.Log(inMsg);
+        //Debug.Log(inMsg);
 
         for(int i = 0; i < wordList.Length; i++)
         {
             char[] filter = wordList[i].ToCharArray();
-            Debug.Log(filter[0]);
+            //Debug.Log(filter[0]);
             for(int j = 0; j < worr.Length-1; j++)
             {
                 if (worr[j] == filter[0])
