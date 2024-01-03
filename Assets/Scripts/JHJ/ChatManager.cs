@@ -95,8 +95,8 @@ public class ChatManager : MonoBehaviourPunCallbacks
 
     public void GoOut()
     {
+        PhotonNetwork.LeaveRoom();
         PhotonNetwork.LoadLevel("Lobby_A");
-
     }
 
     void MsgDetect()   //비속어 필터
@@ -136,6 +136,7 @@ public class ChatManager : MonoBehaviourPunCallbacks
 
         inMsg = new string(worr);
     }
+
 
     [PunRPC]
     public void ReceiveMsg(string msg)
