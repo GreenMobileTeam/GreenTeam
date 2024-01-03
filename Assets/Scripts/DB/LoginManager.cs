@@ -115,7 +115,8 @@ public class LoginManager : MonoBehaviour
                 string nickname = ParseNicknameFromResponse(response);
 
                 PlayerPrefs.SetString("Nickname", nickname);
-               
+                PlayerPrefs.SetString("Username", username);
+
                 string savedNickname = PlayerPrefs.GetString("Nickname", "DefaultNickname");
                 Debug.Log("현재 닉네임: " + savedNickname);
                 PlayerPrefs.SetString("Name", savedNickname);  //혜진
