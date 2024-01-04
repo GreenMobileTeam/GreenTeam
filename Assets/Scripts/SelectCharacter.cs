@@ -12,7 +12,18 @@ public class SelectCharacter : MonoBehaviour
     [SerializeField] private GameObject ghostB;
     [SerializeField] private GameObject ghostC;
 
-    [SerializeField] private float turnAngle = 10f; // 회전값
+    [SerializeField] private GameObject prefabGhostA;
+    [SerializeField] private GameObject prefabGhostB;
+    [SerializeField] private GameObject prefabGhostC;
+
+    [SerializeField] private Material whiteMaterial;
+    [SerializeField] private Material blackMaterial;
+    [SerializeField] private Material blueMaterial;
+    [SerializeField] private Material redMaterial;
+    [SerializeField] private Material greenMaterial;
+    [SerializeField] private Material yellowMaterial;
+
+    [SerializeField] private float turnAngle = 30f; // 회전값
 
     private Quaternion initialRotationA;
     private Quaternion initialRotationB;
@@ -25,6 +36,7 @@ public class SelectCharacter : MonoBehaviour
         initialRotationC = ghostC.transform.rotation;
     }
 
+    // 플레이어 캐릭터 선택 (3종류)
     public void ShowGhostA()
     {
         ghostA.SetActive(true);
@@ -33,7 +45,6 @@ public class SelectCharacter : MonoBehaviour
         ResetRotation(ghostA, initialRotationA);
         CharacterManager.instance.currentCharacter = Character.ghostA;
     }
-
     public void ShowGhostB()
     {
         ghostA.SetActive(false);
@@ -42,7 +53,6 @@ public class SelectCharacter : MonoBehaviour
         ResetRotation(ghostB, initialRotationB);
         CharacterManager.instance.currentCharacter = Character.ghostB;
     }
-
     public void ShowGhostC()
     {
         ghostA.SetActive(false);
@@ -52,19 +62,66 @@ public class SelectCharacter : MonoBehaviour
         CharacterManager.instance.currentCharacter = Character.ghostC;
     }
 
-    public void TurnLeft() // 왼쪽으로 회전
+    // 좌우 회전
+    public void TurnLeft()
     {
         RotateCharacter(turnAngle); 
     }
-
-    public void TurnRight() // 오른쪽으로 회전
+    public void TurnRight()
     {
         RotateCharacter(-turnAngle); 
     }
 
-    public void StartGame()
+    // 색상 변경
+    public void ChangeColorWhite()
     {
-        SceneManager.LoadScene("Map_A");
+        ChangeColor(ghostA, prefabGhostA, whiteMaterial);
+        ChangeColor(ghostB, prefabGhostB, whiteMaterial);
+        ChangeColor(ghostC, prefabGhostC, whiteMaterial);
+    }
+    public void ChangeColorBlack()
+    {
+        ChangeColor(ghostA, prefabGhostA, blackMaterial);
+        ChangeColor(ghostB, prefabGhostB, blackMaterial);
+        ChangeColor(ghostC, prefabGhostC, blackMaterial);
+    }
+    public void ChangeColorBlue()
+    {
+        ChangeColor(ghostA, prefabGhostA, blueMaterial);
+        ChangeColor(ghostB, prefabGhostB, blueMaterial);
+        ChangeColor(ghostC, prefabGhostC, blueMaterial);
+    }
+    public void ChangeColorRed()
+    {
+        ChangeColor(ghostA, prefabGhostA, redMaterial);
+        ChangeColor(ghostB, prefabGhostB, redMaterial);
+        ChangeColor(ghostC, prefabGhostC, redMaterial);
+    }
+    public void ChangeColorGreen()
+    {
+        ChangeColor(ghostA, prefabGhostA, greenMaterial);
+        ChangeColor(ghostB, prefabGhostB, greenMaterial);
+        ChangeColor(ghostC, prefabGhostC, greenMaterial);
+    }
+    public void ChangeColorYellow()
+    {
+        ChangeColor(ghostA, prefabGhostA, yellowMaterial);
+        ChangeColor(ghostB, prefabGhostB, yellowMaterial);
+        ChangeColor(ghostC, prefabGhostC, yellowMaterial);
+    }
+
+    public void ChangeColor(GameObject player ,GameObject prefabPlayer, Material material) {
+        Renderer playerRenderer = player.GetComponentInChildren<Renderer>();
+        Renderer prefabPlayerRenderer = prefabPlayer.GetComponentInChildren<Renderer>();
+
+        if (playerRenderer != null)
+        {
+            playerRenderer.material = material;
+        }
+        if (prefabPlayerRenderer != null)
+        {
+            prefabPlayerRenderer.material = material;
+        }
     }
 
     private void RotateCharacter(float angle)

@@ -13,8 +13,9 @@ public class LoginManager : MonoBehaviour
     public Button loginButn;
 
     private bool nullCheck;
+    public GameObject popup;
 
-    private string serverURL = "https://soft-actors-shine.loca.lt";
+    private string serverURL = "http://localhost:3000";
 
     private void Awake()
     {
@@ -42,21 +43,15 @@ public class LoginManager : MonoBehaviour
         return true;
     }
 
-    [System.Serializable]
     public class LoginResponse
     {
         public string message;
     }
 
 
-    public void SignIn()
+    public void LogIn()
     {
         StartCoroutine(SendLogInRequest(usernameInput.text, passwordInput.text));
-    }
-
-    public void SignUpBtn()
-    {
-        SceneManager.LoadScene("signup");
     }
 
     IEnumerator SendLogInRequest(string username, string password)
@@ -78,19 +73,14 @@ public class LoginManager : MonoBehaviour
                 {
                     LoginResponse response = JsonUtility.FromJson<LoginResponse>(jsonResponse);
 
-                    if (response.message == "Login successful")
+                    if (response.message == "success")
                     {
-                        Debug.Log("로그인 성공!!");
                         OnLoginSuccess(username);
-                        SceneManager.LoadScene("lobby");
+                        SceneManager.LoadScene("Lobby_A");
                     }
-                    else if (response.message == "Invalid username")
+                    else if (response.message == "username" || response.message == "password")
                     {
-                        Debug.Log("유효하지 않은 사용자명");
-                    }
-                    else if (response.message == "Invalid password")
-                    {
-                        Debug.Log("유효하지 않은 비밀번호");
+                        popup.SetActive(true);
                     }
                     else
                     {
@@ -99,12 +89,12 @@ public class LoginManager : MonoBehaviour
                 }
                 catch (System.Exception e)
                 {
-                    Debug.LogError($"Error parsing JSON: {e.Message}");
+                    Debug.LogError("에러" + e.Message);
                 }
             }
             else
             {
-                Debug.LogError($"SignIn failed: {request.error}");
+                Debug.LogError("Login" + request.error);
             }
         }
     }
@@ -125,13 +115,18 @@ public class LoginManager : MonoBehaviour
                 string nickname = ParseNicknameFromResponse(response);
 
                 PlayerPrefs.SetString("Nickname", nickname);
-               
+                PlayerPrefs.SetString("Username", username);
+
                 string savedNickname = PlayerPrefs.GetString("Nickname", "DefaultNickname");
                 Debug.Log("현재 닉네임: " + savedNickname);
+                PlayerPrefs.SetString("Name", savedNickname);  //혜진
+                PlayerPrefs.SetInt("IsGuest", 0);
+                Debug.Log(PlayerPrefs.GetString("Name"));
+                SceneManager.LoadScene("Lobby_A");
             }
             else
             {
-                Debug.LogError($"GetLoginInfo failed: {request.error}");
+                Debug.LogError("GetLoginInfo:" + request.error);
             }
         }
     }
@@ -144,6 +139,17 @@ public class LoginManager : MonoBehaviour
     void OnLoginSuccess(string username)
     {
         StartCoroutine(GetLoginInfo(username));
+    }
+
+    public void PopUpClose()
+    {
+        popup.SetActive(false);
+    }
+
+    public void GuestLogin()
+    {
+        SceneManager.LoadScene("Lobby_A");
+        PlayerPrefs.SetInt("IsGuest", 1);
     }
 
 }

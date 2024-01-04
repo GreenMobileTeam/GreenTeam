@@ -14,6 +14,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     private float joystick_Radius; // rect_JoystickBG의 반지름
     private bool isTouch = false;
     private Vector3 mVector;
+    private bool isBorder;
 
     void Start()
     {
@@ -28,7 +29,10 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     {
         if (isTouch)
         {
-            photonManager.playerGhost.transform.position += mVector;
+            if (!isBorder)
+            {
+                photonManager.playerGhost.transform.position += mVector;
+            }
             photonManager.playerGhost.transform.LookAt(photonManager.playerGhost.transform.position + mVector);
         }
     }
@@ -64,4 +68,14 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
         mVector = Vector3.zero;
     }
 
+    void FixedUpdate()
+    {
+        StopToWall();    
+    }
+
+    void StopToWall()
+    {
+        // Debug.DrawRay(photonManager.playerGhost.transform.position, photonManager.playerGhost.transform.forward * 2, Color.green);
+        isBorder = Physics.Raycast(photonManager.playerGhost.transform.position, photonManager.playerGhost.transform.forward, 2, LayerMask.GetMask("Wall"));
+    }
 }
