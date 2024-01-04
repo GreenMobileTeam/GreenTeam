@@ -15,7 +15,7 @@ public class LoginManager : MonoBehaviour
     private bool nullCheck;
     public GameObject popup;
 
-    private string serverURL = "https://cute-pens-attack.loca.lt";
+    private string serverURL = "http://localhost:3000";
 
     private void Awake()
     {
@@ -43,7 +43,6 @@ public class LoginManager : MonoBehaviour
         return true;
     }
 
-    [System.Serializable]
     public class LoginResponse
     {
         public string message;
@@ -53,11 +52,6 @@ public class LoginManager : MonoBehaviour
     public void LogIn()
     {
         StartCoroutine(SendLogInRequest(usernameInput.text, passwordInput.text));
-    }
-
-    public void SignUpBtn()
-    {
-        SceneManager.LoadScene("signup");
     }
 
     IEnumerator SendLogInRequest(string username, string password)
@@ -79,13 +73,12 @@ public class LoginManager : MonoBehaviour
                 {
                     LoginResponse response = JsonUtility.FromJson<LoginResponse>(jsonResponse);
 
-                    if (response.message == "Login successful")
+                    if (response.message == "success")
                     {
-                        Debug.Log("로그인 성공!!");
                         OnLoginSuccess(username);
-                        //SceneManager.LoadScene("Lobby_A");
+                        SceneManager.LoadScene("Lobby_A");
                     }
-                    else if (response.message == "Invalid username" || response.message == "Invalid password")
+                    else if (response.message == "username" || response.message == "password")
                     {
                         popup.SetActive(true);
                     }
@@ -96,12 +89,12 @@ public class LoginManager : MonoBehaviour
                 }
                 catch (System.Exception e)
                 {
-                    Debug.LogError($"Error parsing JSON: {e.Message}");
+                    Debug.LogError("에러" + e.Message);
                 }
             }
             else
             {
-                Debug.LogError($"SignIn failed: {request.error}");
+                Debug.LogError("Login" + request.error);
             }
         }
     }
@@ -122,7 +115,8 @@ public class LoginManager : MonoBehaviour
                 string nickname = ParseNicknameFromResponse(response);
 
                 PlayerPrefs.SetString("Nickname", nickname);
-               
+                PlayerPrefs.SetString("Username", username);
+
                 string savedNickname = PlayerPrefs.GetString("Nickname", "DefaultNickname");
                 Debug.Log("현재 닉네임: " + savedNickname);
                 PlayerPrefs.SetString("Name", savedNickname);  //혜진
@@ -132,7 +126,7 @@ public class LoginManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError($"GetLoginInfo failed: {request.error}");
+                Debug.LogError("GetLoginInfo:" + request.error);
             }
         }
     }
@@ -157,4 +151,5 @@ public class LoginManager : MonoBehaviour
         SceneManager.LoadScene("Lobby_A");
         PlayerPrefs.SetInt("IsGuest", 1);
     }
+
 }

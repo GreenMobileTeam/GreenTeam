@@ -18,7 +18,7 @@ public class SignupManager : MonoBehaviour
 
     public Button signupButn;
 
-    private string serverURL = "https://cute-pens-attack.loca.lt";
+    private string serverURL = "http://localhost:3000";
 
     private bool nullCheck;
     private bool pwCheck;
@@ -116,7 +116,7 @@ public class SignupManager : MonoBehaviour
             {
                 ResponseData responseData = JsonUtility.FromJson<ResponseData>(request.downloadHandler.text);
                 bool isDuplicate = responseData.isDuplicate;
-                Debug.Log($"{type}이 중복됨: {isDuplicate}");
+                Debug.Log(type + "중복 체크" + isDuplicate);
 
                 if (type == "username")
                 {
@@ -131,7 +131,6 @@ public class SignupManager : MonoBehaviour
                 }
                 else if (type == "nickname")
                 {
-                    // 닉네임 검열 확인
                     if (isDuplicate)
                     {
                         value.text = "";
@@ -145,7 +144,7 @@ public class SignupManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError($"중복 체크 실패: {request.error}");
+                Debug.LogError(" 중복 체크 오류 " + request.error);
             }
         }
     }
@@ -171,7 +170,7 @@ public class SignupManager : MonoBehaviour
             {
                 ResponseData responseData = JsonUtility.FromJson<ResponseData>(request.downloadHandler.text);
                 bool isCensored = responseData.isCensored;  
-                Debug.Log($"{type}에 검열어가 있음: {isCensored}");
+                Debug.Log(type + "비속어 존재 : " + isCensored);
 
                 if (isCensored)
                 {
@@ -187,7 +186,7 @@ public class SignupManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError($"검열 체크 실패: {request.error}");
+                Debug.LogError("비속어 체크 오류 :" + request.error);
             }
         }
     }
@@ -209,12 +208,12 @@ public class SignupManager : MonoBehaviour
             {
                 if (request.result == UnityWebRequest.Result.Success)
                 {
-                    Debug.Log("회원가입 성공!");
+                    Debug.Log("회원가입 성공");
                     ReturnLoginScene();
                 }
                 else
                 {
-                    Debug.LogError($"회원가입 실패: {request.error}");
+                    Debug.LogError("회원가입 실패 : " + request.error);
                 }
             }
         }
