@@ -1662,6 +1662,14 @@ PrefabInstance:
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4315074627235526773, guid: d622589c7e8e2d94bae54e429653bd94, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4315074627235526773, guid: d622589c7e8e2d94bae54e429653bd94, type: 3}
+      propertyPath: restartOnDeviceChange
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6550973026928517217, guid: d622589c7e8e2d94bae54e429653bd94, type: 3}
       propertyPath: m_Name
       value: Speaker
@@ -1671,10 +1679,30 @@ PrefabInstance:
     - {fileID: 2069507364337710676, guid: d622589c7e8e2d94bae54e429653bd94, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6550973026928517217, guid: d622589c7e8e2d94bae54e429653bd94, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8156410848222468684}
   m_SourcePrefab: {fileID: 100100000, guid: d622589c7e8e2d94bae54e429653bd94, type: 3}
 --- !u!4 &1781437069955928691 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 894532709441306314, guid: d622589c7e8e2d94bae54e429653bd94, type: 3}
   m_PrefabInstance: {fileID: 1500520359568927929}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5637187402350300376 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6550973026928517217, guid: d622589c7e8e2d94bae54e429653bd94, type: 3}
+  m_PrefabInstance: {fileID: 1500520359568927929}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8156410848222468684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5637187402350300376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34235d1eefa164349a518a57b425a3ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
