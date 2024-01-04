@@ -26,15 +26,20 @@ public class VoiceDetector : MonoBehaviourPunCallbacks
     private void Start()
     {
         name_.text = PhotonNetwork.LocalPlayer.NickName;
+        Debug.Log("L");
         talkImg.SetActive(false);
         chatBox_.SetActive(false);
+        PlayerPrefs.SetInt("IsChatting", 0);
     }
 
     // Update is called once per frame 
     void Update()
     {
         if (this.photonVoiceView.IsRecording)
+        {
+            Debug.Log("is on");
             this.micImage.SetActive(true);
+        }
         else
             this.micImage.SetActive(false);
         //this.speakerImage.enabled = this.photonVoiceView.IsSpeaking;
@@ -48,8 +53,9 @@ public class VoiceDetector : MonoBehaviourPunCallbacks
             talkImg.SetActive(false);
         }
 
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKeyDown(KeyCode.Escape) || PlayerPrefs.GetInt("Click") == 1)
         {
+            PlayerPrefs.SetInt("Click", 0);
             StopAllCoroutines();
             StartCoroutine(startChat());
         }
@@ -59,6 +65,7 @@ public class VoiceDetector : MonoBehaviourPunCallbacks
     {
         chatBox_.SetActive(true);
         chat.text = PlayerPrefs.GetString("Chat");
+        Debug.Log(PlayerPrefs.GetString("Chat"));
         yield return new WaitForSecondsRealtime(3f);
         chatBox_.SetActive(false);
         chat.text = "";
