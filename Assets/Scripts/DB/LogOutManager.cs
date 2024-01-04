@@ -12,11 +12,6 @@ public class LogOutManager : MonoBehaviour
 
     private static LogOutManager instance = null;
 
-    internal void LogOut()
-    {
-        throw new NotImplementedException();
-    }
-
     void Awake()
     {
         if (null == instance)
@@ -42,16 +37,18 @@ public class LogOutManager : MonoBehaviour
         }
     }
 
-    public void LogOut(string username)
+    public void LogOut()
     {
-        StartCoroutine(SendLogoutRequest(username));
+        StartCoroutine(SendLogoutRequest());
     }
 
-    IEnumerator SendLogoutRequest(string username)
+    IEnumerator SendLogoutRequest()
     {
         string url = $"{serverURL}/logout";
 
         WWWForm form = new WWWForm();
+
+        username = PlayerPrefs.GetString("Username");
         form.AddField("username", username);
 
         using (UnityWebRequest www = UnityWebRequest.Post(url, form))
@@ -71,7 +68,7 @@ public class LogOutManager : MonoBehaviour
 
     public void OnApplicationQuit()
     {
-        if(PlayerPrefs.GetInt("IsGuest") == 0)
-            LogOut(PlayerPrefs.GetString("Username"));
+        if (PlayerPrefs.GetInt("IsGuest") == 0)
+            LogOut();
     }
 }

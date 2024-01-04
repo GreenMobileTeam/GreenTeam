@@ -110,6 +110,9 @@ public class LoginManager : MonoBehaviour
         string url = $"{serverURL}/getLoginInfo";
         WWWForm form = new WWWForm();
         form.AddField("username", username);
+
+        PlayerPrefs.SetString("Username", username);
+
         using (UnityWebRequest request = UnityWebRequest.Post(url, form))
         {
             yield return request.SendWebRequest();
@@ -117,10 +120,7 @@ public class LoginManager : MonoBehaviour
             {
                 string response = request.downloadHandler.text;
                 string nickname = ParseNicknameFromResponse(response);
-
                 PlayerPrefs.SetString("Nickname", nickname);
-                PlayerPrefs.SetString("Username", username);
-
                 string savedNickname = PlayerPrefs.GetString("Nickname");
                 Debug.Log("현재 닉네임: " + savedNickname);
                 PlayerPrefs.SetString("Name", savedNickname);  //혜진
@@ -158,7 +158,8 @@ public class LoginManager : MonoBehaviour
 
     public void AttemptLogout()
     {
-        LogOutManager.Instance.LogOut(usernameInput.text);
+        PlayerPrefs.SetString("Username", usernameInput.text);
+        LogOutManager.Instance.LogOut();
         PopUpClose();
     }
 
