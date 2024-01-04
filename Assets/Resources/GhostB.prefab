@@ -678,6 +678,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5570615896869567350}
   - component: {fileID: 1583858851421228111}
+  - component: {fileID: 3929984337674349604}
+  - component: {fileID: 4040099430494056775}
   m_Layer: 0
   m_Name: ChatBox
   m_TagString: Untagged
@@ -753,6 +755,45 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3929984337674349604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2972765201392482801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 4040099430494056775}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &4040099430494056775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2972765201392482801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &3713585633633999626
 GameObject:
   m_ObjectHideFlags: 0
@@ -1116,10 +1157,11 @@ MonoBehaviour:
   prefixField: -1
   Synchronization: 3
   OwnershipTransfer: 0
-  observableSearch: 2
+  observableSearch: 0
   ObservedComponents:
   - {fileID: 1098206219866288114}
   - {fileID: 5262112978135361830}
+  - {fileID: 1098206219866288114}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -1607,6 +1649,14 @@ PrefabInstance:
     - target: {fileID: 894532709441306314, guid: d622589c7e8e2d94bae54e429653bd94, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3243882250717150670, guid: d622589c7e8e2d94bae54e429653bd94, type: 3}
+      propertyPath: MaxDistance
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3243882250717150670, guid: d622589c7e8e2d94bae54e429653bd94, type: 3}
+      propertyPath: MinDistance
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3243882250717150670, guid: d622589c7e8e2d94bae54e429653bd94, type: 3}
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value

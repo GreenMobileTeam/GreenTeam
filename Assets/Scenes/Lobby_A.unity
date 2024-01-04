@@ -139,6 +139,10 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 3929984337674349604, guid: c924f13d189efe743908de073741a4fa, type: 3}
+      propertyPath: sceneViewId
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 4810496886502207305, guid: c924f13d189efe743908de073741a4fa, type: 3}
       propertyPath: m_LocalScale.x
       value: 5
@@ -393,6 +397,10 @@ PrefabInstance:
     - target: {fileID: 6894758616458720822, guid: 8630843cc477aa84a80429e2c4f40ed6, type: 3}
       propertyPath: m_UseGravity
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8295210170444076250, guid: 8630843cc477aa84a80429e2c4f40ed6, type: 3}
+      propertyPath: sceneViewId
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8877333148251591972, guid: 8630843cc477aa84a80429e2c4f40ed6, type: 3}
       propertyPath: sceneViewId
