@@ -10,15 +10,19 @@ public class ChatManager : MonoBehaviourPunCallbacks
 {
     public int roomNumber;
     public Button sendBtn;
+    public Button MicOnOff;
     public TextMeshProUGUI chatLog;
     public TextMeshProUGUI chattingList;
     public TextMeshProUGUI filterWord;
     public TMP_InputField input;
     public ScrollRect scroll_rect;
+
     string chatters;
     string color;
     string inMsg;
     string[] wordList;
+
+    bool isMic = false; 
 
     void Start()
     {
@@ -147,7 +151,6 @@ public class ChatManager : MonoBehaviourPunCallbacks
 
         inMsg = new string(worr);
     }
-
 
     [PunRPC]
     public void ReceiveMsg(string msg)

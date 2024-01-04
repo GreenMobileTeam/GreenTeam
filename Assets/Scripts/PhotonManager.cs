@@ -9,6 +9,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public GameObject playerGhost;
     private readonly string version = "1.0";
     //private string userId = "Yong";
+    bool flag = false;
 
     private void Awake()
     {
@@ -53,27 +54,52 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        Debug.Log($"{PhotonNetwork.InRoom}");
-        Debug.Log($"{PhotonNetwork.CurrentRoom.PlayerCount}");
+        //Debug.Log($"{PhotonNetwork.InRoom}");
+        //Debug.Log($"{PhotonNetwork.CurrentRoom.PlayerCount}");
 
+        Transform spawnpoint = GameObject.Find("SpawnPoint").GetComponent<Transform>();
+        switch (CharacterManager.instance.currentCharacter)
+        {
+            case Character.ghostA:
+                playerGhost = PhotonNetwork.Instantiate("GhostA", spawnpoint.position, spawnpoint.rotation, 0);
+                break;
+            case Character.ghostB:
+                playerGhost = PhotonNetwork.Instantiate("GhostB", spawnpoint.position, spawnpoint.rotation, 0);
+                break;
+            case Character.ghostC:
+                playerGhost = PhotonNetwork.Instantiate("GhostC", spawnpoint.position, spawnpoint.rotation, 0);
+                break;
+        }
+
+        /*
         foreach(var player in PhotonNetwork.CurrentRoom.Players)
         {
             //Debug.Log($"{player.Value.NickName}, {player.Value.ActorNumber}");
-
+            Debug.Log("Spawn"+player);
             Transform spawnpoint = GameObject.Find("SpawnPoint").GetComponent<Transform>();
 
-            if(CharacterManager.instance.currentCharacter == Character.ghostA)
+            if (CharacterManager.instance.currentCharacter == Character.ghostA && flag == false)
             {
+                flag = true;
                 playerGhost = PhotonNetwork.Instantiate("GhostA", spawnpoint.position, spawnpoint.rotation, 0);
+                flag = false;
             } 
-            else if (CharacterManager.instance.currentCharacter == Character.ghostB)
+            else if (CharacterManager.instance.currentCharacter == Character.ghostB && flag == false)
             {
+                flag = true;
                 playerGhost = PhotonNetwork.Instantiate("GhostB", spawnpoint.position, spawnpoint.rotation, 0);
+                flag = false;
             }
             else
             {
-                playerGhost = PhotonNetwork.Instantiate("GhostC", spawnpoint.position, spawnpoint.rotation, 0);
+                if(flag == false)
+                {
+                    flag = true;
+                    playerGhost = PhotonNetwork.Instantiate("GhostC", spawnpoint.position, spawnpoint.rotation, 0);
+                    flag = false;
+                }
             }
         }
+        */
     }
 }
