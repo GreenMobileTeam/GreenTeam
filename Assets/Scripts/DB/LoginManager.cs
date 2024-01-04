@@ -13,13 +13,17 @@ public class LoginManager : MonoBehaviour
     public Button loginButn;
 
     private bool nullCheck;
-    public GameObject popup;
+    public GameObject Checkpopup;
+    public GameObject DuplicatePopup;
 
     private string serverURL = "http://localhost:3000";
 
     private void Awake()
     {
         nullCheck = false;
+
+        PlayerPrefs.SetString("Nickname", "");
+        PlayerPrefs.SetString("Username", "");
     }
 
     private void Update()
@@ -60,7 +64,6 @@ public class LoginManager : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("username", username);
         form.AddField("password", password);
-
         using (UnityWebRequest request = UnityWebRequest.Post(url, form))
         {
             yield return request.SendWebRequest();
@@ -72,7 +75,6 @@ public class LoginManager : MonoBehaviour
                 try
                 {
                     LoginResponse response = JsonUtility.FromJson<LoginResponse>(jsonResponse);
-
                     if (response.message == "success")
                     {
                         OnLoginSuccess(username);
@@ -80,7 +82,11 @@ public class LoginManager : MonoBehaviour
                     }
                     else if (response.message == "username" || response.message == "password")
                     {
-                        popup.SetActive(true);
+                        Checkpopup.SetActive(true);
+                    }
+                    else if (response.message == "already login")
+                    {
+                        DuplicatePopup.SetActive(true);
                     }
                     else
                     {
@@ -104,11 +110,9 @@ public class LoginManager : MonoBehaviour
         string url = $"{serverURL}/getLoginInfo";
         WWWForm form = new WWWForm();
         form.AddField("username", username);
-
         using (UnityWebRequest request = UnityWebRequest.Post(url, form))
         {
             yield return request.SendWebRequest();
-
             if (request.result == UnityWebRequest.Result.Success)
             {
                 string response = request.downloadHandler.text;
@@ -117,11 +121,10 @@ public class LoginManager : MonoBehaviour
                 PlayerPrefs.SetString("Nickname", nickname);
                 PlayerPrefs.SetString("Username", username);
 
-                string savedNickname = PlayerPrefs.GetString("Nickname", "DefaultNickname");
+                string savedNickname = PlayerPrefs.GetString("Nickname");
                 Debug.Log("현재 닉네임: " + savedNickname);
                 PlayerPrefs.SetString("Name", savedNickname);  //혜진
                 PlayerPrefs.SetInt("IsGuest", 0);
-                Debug.Log(PlayerPrefs.GetString("Name"));
                 SceneManager.LoadScene("Lobby_A");
             }
             else
@@ -143,13 +146,20 @@ public class LoginManager : MonoBehaviour
 
     public void PopUpClose()
     {
-        popup.SetActive(false);
+        Checkpopup.SetActive(false);
+        DuplicatePopup.SetActive(false);
     }
 
     public void GuestLogin()
     {
         SceneManager.LoadScene("Lobby_A");
         PlayerPrefs.SetInt("IsGuest", 1);
+    }
+
+    public void AttemptLogout()
+    {
+        LogOutManager.Instance.LogOut(usernameInput.text);
+        PopUpClose();
     }
 
 }

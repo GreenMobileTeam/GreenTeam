@@ -791,6 +791,7 @@ GameObject:
   - component: {fileID: 477801609}
   - component: {fileID: 477801608}
   - component: {fileID: 477801612}
+  - component: {fileID: 477801613}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -914,6 +915,18 @@ MonoBehaviour:
   greenMaterial: {fileID: 2100000, guid: 9b8988b47a2ef7741951129c409690df, type: 2}
   yellowMaterial: {fileID: 2100000, guid: 43720b75b133fc7489de17312ebe0864, type: 2}
   turnAngle: 30
+--- !u!114 &477801613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 477801607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c34cb3a2d00726479e55f59d8419965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &557844082
 GameObject:
   m_ObjectHideFlags: 0
@@ -2939,7 +2952,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1780294968}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 477801613}
+        m_TargetAssemblyTypeName: LogoutBtn, Assembly-CSharp
+        m_MethodName: LogOut
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1780294968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3112,6 +3137,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1798742677}
   m_CullTransparentMesh: 1
+--- !u!1 &1827628824
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1827628825}
+  - component: {fileID: 1827628826}
+  m_Layer: 0
+  m_Name: SessionChecker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1827628825
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1827628824}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 792.1603, y: 676.32495, z: -8.959281}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1827628826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1827628824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f546c6d0bed557f40b007c59e6578e5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  seconds: 2
 --- !u!1 &1832265284
 GameObject:
   m_ObjectHideFlags: 0
@@ -4066,3 +4136,4 @@ SceneRoots:
   - {fileID: 853632608}
   - {fileID: 1897985358}
   - {fileID: 726215405}
+  - {fileID: 1827628825}

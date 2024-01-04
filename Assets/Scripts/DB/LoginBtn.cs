@@ -14,6 +14,7 @@ public class LoginBtn : MonoBehaviour
         SceneManager.LoadScene("Lobby_A");
         PlayerPrefs.SetInt("IsGuest", 1);
     }
+
     public void ExitBtn()
     {
 #if UNITY_EDITOR
