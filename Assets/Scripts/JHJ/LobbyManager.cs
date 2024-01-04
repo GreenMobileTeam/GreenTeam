@@ -79,16 +79,22 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     }
 
     //rooms
-    public void RoomSelect()
+    public void Room1Secelct()
     {
-        GameObject clickedBtn = EventSystem.current.currentSelectedGameObject;
-        string name = clickedBtn.name;
-        roomNum = int.Parse(name.Substring(name.Length-1,1));
-        Debug.Log("Select" + roomNum + "Room");
-        ConnectRoom();
+        ConnectRoom("Map_1");
     }
 
-    void ConnectRoom()
+    public void Room2Secelct()
+    {
+        ConnectRoom("Map_2");
+    }
+
+    public void Room3Secelct()
+    {
+        ConnectRoom("Map_3");
+    }
+
+    void ConnectRoom(string roomName)
     {
         if (PhotonNetwork.IsConnected)
         {
@@ -104,7 +110,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             }
             //PhotonNetwork.JoinRandomRoom();
             PhotonNetwork.JoinOrCreateRoom("Map_" + roomNum, new RoomOptions { MaxPlayers = 10}, null);
-            PhotonNetwork.LoadLevel("Map_"+roomNum);
+            PhotonNetwork.LoadLevel(roomName);
         }
         else
         {
