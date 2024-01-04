@@ -148,12 +148,14 @@ namespace Photon.Voice.PUN
             }
         }
 
+
         protected override Speaker InstantiateSpeakerForRemoteVoice(int playerId, byte voiceId, object userData)
         {
             if (userData == null) // Recorder w/o PhotonVoiceView: probably created due to this.UsePrimaryRecorder = true
             {
                 this.Logger.LogInfo("Creating Speaker for remote voice p#{0} v#{1} PunVoiceClient Primary Recorder (userData == null).", playerId, voiceId);
-                return this.InstantiateSpeakerPrefab(this.gameObject, true);
+                //return this.InstantiateSpeakerPrefab(this.gameObject, true);
+                return null;
             }
 
             if (!(userData is int))

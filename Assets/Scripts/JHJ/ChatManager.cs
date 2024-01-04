@@ -39,6 +39,7 @@ public class ChatManager : MonoBehaviourPunCallbacks
         inMsg = input.text;
         MsgDetect();
         PlayerPrefs.SetString("Chat", inMsg);
+        PlayerPrefs.SetInt("Click", 1);
         if (PhotonNetwork.IsMasterClient)  //방장이라면
         {
             msg = string.Format("<color=#{0}>[☆{1}] {2}</color>", color, PhotonNetwork.LocalPlayer.NickName, inMsg);
@@ -47,7 +48,6 @@ public class ChatManager : MonoBehaviourPunCallbacks
         {
             msg = string.Format("<color=#{0}>[{1}]</color> {2}", color, PhotonNetwork.LocalPlayer.NickName, inMsg);
         }
-        PlayerPrefs.SetString("Chat", "");
         photonView.RPC("ReceiveMsg", RpcTarget.OthersBuffered, msg);
         ReceiveMsg(msg);
         input.ActivateInputField(); // 반대는 input.select(); (반대로 토글)
@@ -60,7 +60,7 @@ public class ChatManager : MonoBehaviourPunCallbacks
         chatterUpdate();
         if (Input.GetKeyDown(KeyCode.Return)) SendButtonOnClicked();
 
-        if(input.text.Length > 0)
+        if(input.text.Length > 1)
         {
             PlayerPrefs.SetInt("IsChatting", 1);
         }
