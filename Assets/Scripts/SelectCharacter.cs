@@ -34,11 +34,58 @@ public class SelectCharacter : MonoBehaviour
         initialRotationA = ghostA.transform.rotation;
         initialRotationB = ghostB.transform.rotation;
         initialRotationC = ghostC.transform.rotation;
+        if(!PlayerPrefs.HasKey("gColor"))
+            ChangeColorWhite();
+        else
+        {
+            int n = PlayerPrefs.GetInt("gColor");
+            switch (n)
+            {
+                case 0:
+                    ChangeColorWhite();
+                    break;
+                case 1:
+                    ChangeColorBlack();
+                    break;
+                case 2:
+                    ChangeColorBlue();
+                    break;
+                case 3:
+                    ChangeColorRed();
+                    break;
+                case 4:
+                    ChangeColorGreen();
+                    break;
+                case 5:
+                    ChangeColorYellow();
+                    break;
+                default:
+                    break;
+            }
+
+            string g = PlayerPrefs.GetString("nowGhost");
+
+            switch (g)
+            {
+                case "A":
+                    ShowGhostA();
+                    break;
+                case "B":
+                    ShowGhostB();
+                    break;
+                case "C":
+                    ShowGhostC();
+                    break;
+            }
+        }
+
+
     }
 
     // 플레이어 캐릭터 선택 (3종류)
     public void ShowGhostA()
     {
+        PlayerPrefs.SetString("nowGhost","A");
         ghostA.SetActive(true);
         ghostB.SetActive(false);
         ghostC.SetActive(false);
@@ -47,6 +94,7 @@ public class SelectCharacter : MonoBehaviour
     }
     public void ShowGhostB()
     {
+        PlayerPrefs.SetString("nowGhost", "B");
         ghostA.SetActive(false);
         ghostB.SetActive(true);
         ghostC.SetActive(false);
@@ -55,6 +103,7 @@ public class SelectCharacter : MonoBehaviour
     }
     public void ShowGhostC()
     {
+        PlayerPrefs.SetString("nowGhost", "C");
         ghostA.SetActive(false);
         ghostB.SetActive(false);
         ghostC.SetActive(true);
@@ -75,42 +124,49 @@ public class SelectCharacter : MonoBehaviour
     // 색상 변경
     public void ChangeColorWhite()
     {
+        PlayerPrefs.SetInt("gColor", 0);
         ChangeColor(ghostA, prefabGhostA, whiteMaterial);
         ChangeColor(ghostB, prefabGhostB, whiteMaterial);
         ChangeColor(ghostC, prefabGhostC, whiteMaterial);
     }
     public void ChangeColorBlack()
     {
+        PlayerPrefs.SetInt("gColor", 1);
         ChangeColor(ghostA, prefabGhostA, blackMaterial);
         ChangeColor(ghostB, prefabGhostB, blackMaterial);
         ChangeColor(ghostC, prefabGhostC, blackMaterial);
     }
     public void ChangeColorBlue()
     {
+        PlayerPrefs.SetInt("gColor", 2);
         ChangeColor(ghostA, prefabGhostA, blueMaterial);
         ChangeColor(ghostB, prefabGhostB, blueMaterial);
         ChangeColor(ghostC, prefabGhostC, blueMaterial);
     }
     public void ChangeColorRed()
     {
+        PlayerPrefs.SetInt("gColor", 3);
         ChangeColor(ghostA, prefabGhostA, redMaterial);
         ChangeColor(ghostB, prefabGhostB, redMaterial);
         ChangeColor(ghostC, prefabGhostC, redMaterial);
     }
     public void ChangeColorGreen()
     {
+        PlayerPrefs.SetInt("gColor", 4);
         ChangeColor(ghostA, prefabGhostA, greenMaterial);
         ChangeColor(ghostB, prefabGhostB, greenMaterial);
         ChangeColor(ghostC, prefabGhostC, greenMaterial);
     }
     public void ChangeColorYellow()
     {
+        PlayerPrefs.SetInt("gColor", 5);
         ChangeColor(ghostA, prefabGhostA, yellowMaterial);
         ChangeColor(ghostB, prefabGhostB, yellowMaterial);
         ChangeColor(ghostC, prefabGhostC, yellowMaterial);
     }
 
     public void ChangeColor(GameObject player ,GameObject prefabPlayer, Material material) {
+        Debug.Log("Color Changed");
         Renderer playerRenderer = player.GetComponentInChildren<Renderer>();
         Renderer prefabPlayerRenderer = prefabPlayer.GetComponentInChildren<Renderer>();
 
