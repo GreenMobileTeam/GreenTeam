@@ -86,7 +86,7 @@ public class ChatManager : MonoBehaviourPunCallbacks
             titleBtn.SetActive(false);
         }
 
-        if(Input.GetKeyDown(KeyCode.Return))    TitleUpdate();
+        TitleUpdate();
     }
 
     void chatterUpdate()
@@ -106,6 +106,7 @@ public class ChatManager : MonoBehaviourPunCallbacks
             chatters += s;
         }
         chattingList.text = chatters;
+        
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
