@@ -17,6 +17,8 @@ public class ChatManager : MonoBehaviourPunCallbacks
     public GameObject titleInput;
     public TMP_InputField input;
     public ScrollRect scroll_rect;
+    public GameObject winnerBtn;
+    public GameObject winnerPan;
 
     TMP_InputField titleInput_;
 
@@ -45,7 +47,7 @@ public class ChatManager : MonoBehaviourPunCallbacks
         MsgDetect();
         if (PhotonNetwork.IsMasterClient)  //방장이라면
         {
-            msg = string.Format("<color=#{0}>[☆{1}] {2}</color>", color, PhotonNetwork.LocalPlayer.NickName, inMsg);
+            msg = string.Format("<color=#{0}>[☆{1}]</color> {2}", color, PhotonNetwork.LocalPlayer.NickName, inMsg);
         }
         else
         {
@@ -73,20 +75,6 @@ public class ChatManager : MonoBehaviourPunCallbacks
             TitleUpdate_();
             SendButtonOnClicked();
         }
-
-
-        if (PhotonNetwork.IsMasterClient) //방장이라면 타이틀 입력칸 뜸
-        {
-            titleInput.SetActive(true);
-            titleSendBtn.SetActive(true);
-        }
-        else
-        {
-            titleInput.SetActive(false);
-            titleSendBtn.SetActive(false);
-        }
-
-
     }
 
 
@@ -115,6 +103,21 @@ public class ChatManager : MonoBehaviourPunCallbacks
         //base.OnPlayerEnteredRoom(newPlayer);
         string msg = string.Format("<color=#00ff00>[{0}]님이 입장하셨습니다.</color>", newPlayer.NickName);
         ReceiveMsg(msg);
+
+        if (PhotonNetwork.IsMasterClient) //방장이라면 타이틀 입력칸, 토론 승패 뜸
+        {
+            titleInput.SetActive(true);
+            titleSendBtn.SetActive(true);
+            winnerBtn.SetActive(true);
+            winnerPan.SetActive(true);
+        }
+        else
+        {
+            titleInput.SetActive(false);
+            titleSendBtn.SetActive(false);
+            winnerBtn.SetActive(false);
+            winnerPan.SetActive(false);
+        }
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
@@ -122,6 +125,21 @@ public class ChatManager : MonoBehaviourPunCallbacks
         //base.OnPlayerLeftRoom(otherPlayer);
         string msg = string.Format("<color=#ff0000>[{0}]님이 퇴장하셨습니다.</color>", otherPlayer.NickName);
         ReceiveMsg(msg);
+
+        if (PhotonNetwork.IsMasterClient) //방장이라면 타이틀 입력칸, 토론 승패 뜸
+        {
+            titleInput.SetActive(true);
+            titleSendBtn.SetActive(true);
+            winnerBtn.SetActive(true);
+            winnerPan.SetActive(true);
+        }
+        else
+        {
+            titleInput.SetActive(false);
+            titleSendBtn.SetActive(false);
+            winnerBtn.SetActive(false);
+            winnerPan.SetActive(false);
+        }
     }
 
     public void GoOut()
@@ -166,6 +184,38 @@ public class ChatManager : MonoBehaviourPunCallbacks
         }
 
         inMsg = new string(worr);
+    }
+
+    public void WinnerBlue()
+    {
+        WinUpdate("찬성", "0000FF");
+    }
+
+    public void WinnerRed()
+    {
+        WinUpdate("반대", "FF0000");
+    }
+
+    public void WinnerNone()
+    {
+        string n = string.Format("무승부 입니다~!");
+        string msg = string.Format("<color=#{0}>[☆{1}] {2}</color>", "FFFFFF", PhotonNetwork.LocalPlayer.NickName, n);
+        photonView.RPC("ReceiveMsg", RpcTarget.OthersBuffered, msg);
+        ReceiveMsg(msg);
+        input.ActivateInputField(); // 반대는 input.select(); (반대로 토글)
+        input.text = "";
+    }
+
+    
+
+    void WinUpdate(string winner, string color)
+    {
+        string n = string.Format("승리한 팀은 {0}팀 입니다~!",winner);
+        string msg = string.Format("<color=#{0}>[☆{1}] {2}</color>", color, PhotonNetwork.LocalPlayer.NickName, n);
+        photonView.RPC("ReceiveMsg", RpcTarget.OthersBuffered, msg);
+        ReceiveMsg(msg);
+        input.ActivateInputField(); // 반대는 input.select(); (반대로 토글)
+        input.text = "";
     }
 
     [PunRPC]
