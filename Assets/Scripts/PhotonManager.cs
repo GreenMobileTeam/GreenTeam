@@ -10,6 +10,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     private readonly string version = "1.0";
     //private string userId = "Yong";
     bool flag = false;
+    public Material[] gColors;
+    public GameObject[] gPrefabs;
 
     private void Awake()
     {
@@ -56,17 +58,19 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         //Debug.Log($"{PhotonNetwork.InRoom}");
         //Debug.Log($"{PhotonNetwork.CurrentRoom.PlayerCount}");
-
         Transform spawnpoint = GameObject.Find("SpawnPoint").GetComponent<Transform>();
         switch (CharacterManager.instance.currentCharacter)
         {
             case Character.ghostA:
+                ChangeColor(gPrefabs[0],gColors[PlayerPrefs.GetInt("gColor")]);
                 playerGhost = PhotonNetwork.Instantiate("GhostA", spawnpoint.position, spawnpoint.rotation, 0);
                 break;
             case Character.ghostB:
+                ChangeColor(gPrefabs[1], gColors[PlayerPrefs.GetInt("gColor")]);
                 playerGhost = PhotonNetwork.Instantiate("GhostB", spawnpoint.position, spawnpoint.rotation, 0);
                 break;
             case Character.ghostC:
+                ChangeColor(gPrefabs[2], gColors[PlayerPrefs.GetInt("gColor")]);
                 playerGhost = PhotonNetwork.Instantiate("GhostC", spawnpoint.position, spawnpoint.rotation, 0);
                 break;
         }
@@ -101,5 +105,16 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             }
         }
         */
+    }
+
+    void ChangeColor(GameObject prefabPlayer, Material material)
+    {
+        Debug.Log("Color Changed");
+        Renderer prefabPlayerRenderer = prefabPlayer.GetComponentInChildren<Renderer>();
+
+        if (prefabPlayerRenderer != null)
+        {
+            prefabPlayerRenderer.material = material;
+        }
     }
 }

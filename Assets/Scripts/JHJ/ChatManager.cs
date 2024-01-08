@@ -8,21 +8,23 @@ using TMPro;
 
 public class ChatManager : MonoBehaviourPunCallbacks
 {
-    public int roomNumber;
     public Button sendBtn;
     public Button MicOnOff;
     public TextMeshProUGUI chatLog;
     public TextMeshProUGUI chattingList;
     public TextMeshProUGUI filterWord;
+    public TextMeshProUGUI title;
+    public GameObject titleInput;
+    public GameObject titleBtn;
     public TMP_InputField input;
     public ScrollRect scroll_rect;
+
+    TMP_InputField titleInput_;
 
     string chatters;
     string color;
     string inMsg;
     string[] wordList;
-
-    bool isMic = false; 
 
     void Start()
     {
@@ -33,7 +35,7 @@ public class ChatManager : MonoBehaviourPunCallbacks
             color = "FFFFFF";
         else
             color = PlayerPrefs.GetString("Mycolor");
-
+        titleInput_ = titleInput.GetComponent<TMP_InputField>();
     }
 
     public void SendButtonOnClicked()
@@ -72,12 +74,24 @@ public class ChatManager : MonoBehaviourPunCallbacks
         {
             PlayerPrefs.SetInt("IsChatting", 0);
         }
+
+        if (PhotonNetwork.IsMasterClient) //방장이라면 타이틀 입력칸 뜸
+        {
+            titleInput.SetActive(true);
+            titleBtn.SetActive(true);
+        }
+        else
+        {
+            titleInput.SetActive(false);
+            titleBtn.SetActive(false);
+        }
+
+        if(Input.GetKeyDown(KeyCode.Return))    TitleUpdate();
     }
 
     void chatterUpdate()
     {
         chatters = "Player List\n";
-        PlayerPrefs.SetInt("Room" + roomNumber, PhotonNetwork.PlayerList.Length);
         foreach (Player p in PhotonNetwork.PlayerList)
         {
             string s = "";
@@ -157,5 +171,11 @@ public class ChatManager : MonoBehaviourPunCallbacks
     {
         chatLog.text += "\n" + msg;
         scroll_rect.verticalNormalizedPosition = 0.0f;
+    }
+
+    [PunRPC]
+    public void TitleUpdate()
+    {
+        title.text = titleInput_.text;
     }
 }

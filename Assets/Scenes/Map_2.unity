@@ -2785,6 +2785,7 @@ GameObject:
   - component: {fileID: 483644312}
   - component: {fileID: 483644311}
   - component: {fileID: 483644314}
+  - component: {fileID: 483644315}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2876,6 +2877,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 54c30fe0c6ba97e43b7984c239e00b32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &483644315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 483644310}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68a8bea7e6c09014da065aef68f83479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &484493604
@@ -9777,14 +9790,6 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8062784210769708403, guid: 8f1d37b2c3f185e4bbd3f1fd844d8b2d, type: 3}
-      propertyPath: m_text
-      value: "\uACF5\uB3D9\uBB18\uC9C0"
-      objectReference: {fileID: 0}
-    - target: {fileID: 8062784210769708403, guid: 8f1d37b2c3f185e4bbd3f1fd844d8b2d, type: 3}
-      propertyPath: m_HorizontalAlignment
-      value: 4
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13310,6 +13315,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerGhost: {fileID: 0}
+  gColors:
+  - {fileID: 2100000, guid: 3200bcc81d4868f49bd0afca6f50701f, type: 2}
+  - {fileID: 2100000, guid: 556750452966dfa469c436ca5368ba03, type: 2}
+  - {fileID: 2100000, guid: dd2fc93fcdb2a1340bb936afbf80bb10, type: 2}
+  - {fileID: 2100000, guid: 228da3d59211dc540a8394f2fd1a57c8, type: 2}
+  - {fileID: 2100000, guid: 9b8988b47a2ef7741951129c409690df, type: 2}
+  - {fileID: 2100000, guid: 43720b75b133fc7489de17312ebe0864, type: 2}
+  gPrefabs:
+  - {fileID: 761209657132810126, guid: 8630843cc477aa84a80429e2c4f40ed6, type: 3}
+  - {fileID: 6721706016886709158, guid: c924f13d189efe743908de073741a4fa, type: 3}
+  - {fileID: 5498640685932101162, guid: 71e3a4d65b484be428c22f37dbd7e000, type: 3}
 --- !u!4 &1662293859
 Transform:
   m_ObjectHideFlags: 0

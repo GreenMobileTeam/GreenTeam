@@ -46,11 +46,11 @@ public class VoiceDetector : MonoBehaviourPunCallbacks
 
         if(PlayerPrefs.GetInt("IsChatting") == 1)
         {
-            talkImg.SetActive(true);
+            MicImg(true);
         }
         else
         {
-            talkImg.SetActive(false);
+            MicImg(false);
         }
 
         if(Input.GetKeyDown(KeyCode.Escape) || PlayerPrefs.GetInt("Click") == 1)
@@ -61,6 +61,7 @@ public class VoiceDetector : MonoBehaviourPunCallbacks
         }
     }
 
+    [PunRPC]
     IEnumerator startChat()
     {
         chatBox_.SetActive(true);
@@ -69,5 +70,18 @@ public class VoiceDetector : MonoBehaviourPunCallbacks
         yield return new WaitForSecondsRealtime(3f);
         chatBox_.SetActive(false);
         chat.text = "";
+    }
+
+    [PunRPC]
+    void MicImg(bool isOn)
+    {
+        if (isOn)
+        {
+            this.micImage.SetActive(true);
+        }
+        else
+        {
+            this.micImage.SetActive(false);
+        }
     }
 }

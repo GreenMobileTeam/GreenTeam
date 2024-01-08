@@ -1,7 +1,7 @@
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using TMPro;
 using System.Collections.Generic;
@@ -92,6 +92,11 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public void Room3Secelct()
     {
         ConnectRoom("Map_3");
+    }
+
+    public void LogOut()
+    {
+        SceneManager.LoadScene("Login");
     }
 
     void ConnectRoom(string roomName)
