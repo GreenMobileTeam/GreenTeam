@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SessionManager : MonoBehaviour
 {
-    string serverURL = "http://localhost:3000";
+    string serverURL = "http://greenacademi.store";
 
     private static SessionManager instance = null;
 

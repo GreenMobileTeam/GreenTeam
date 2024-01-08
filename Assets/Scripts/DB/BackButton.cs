@@ -59,7 +59,7 @@ public class BackButton : MonoBehaviour
             {
                 if (PlayerPrefs.GetInt("IsGuest") == 0)
                 {
-                     LogOutManager.Instance.LogOut(PlayerPrefs.GetString("Username"));
+                     LogOutManager.Instance.LogOut();
                 }
 
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 2);
