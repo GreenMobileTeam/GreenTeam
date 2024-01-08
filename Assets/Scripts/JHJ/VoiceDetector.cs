@@ -44,6 +44,7 @@ public class VoiceDetector : MonoBehaviourPunCallbacks
             this.micImage.SetActive(false);
         //this.speakerImage.enabled = this.photonVoiceView.IsSpeaking;
 
+        /*
         if(PlayerPrefs.GetInt("IsChatting") == 1)
         {
             MicImg(true);
@@ -59,8 +60,10 @@ public class VoiceDetector : MonoBehaviourPunCallbacks
             StopAllCoroutines();
             StartCoroutine(startChat());
         }
+        */
     }
 
+    /*
     [PunRPC]
     IEnumerator startChat()
     {
@@ -84,4 +87,5 @@ public class VoiceDetector : MonoBehaviourPunCallbacks
             this.micImage.SetActive(false);
         }
     }
+    */
 }
