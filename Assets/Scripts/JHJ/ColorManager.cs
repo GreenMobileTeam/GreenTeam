@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class ColorManager : MonoBehaviour
 {
+    private void Start()
+    {
+        PlayerPrefs.DeleteAll();
+        if (!PlayerPrefs.HasKey("Mycolor"))
+            PlayerPrefs.SetString("Mycolor", "FFFFFF");
+    }
+
     public void RedSelect()
     {
         //gm.myColor = "FF0000";

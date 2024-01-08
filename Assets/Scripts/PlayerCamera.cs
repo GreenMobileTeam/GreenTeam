@@ -6,6 +6,7 @@ using Photon.Realtime;
 
 public class PlayerCamera : MonoBehaviour
 {
+    /*
     public Transform PlayerTransform;
     public Vector3 offset;
     private Transform myTR;
@@ -18,7 +19,8 @@ public class PlayerCamera : MonoBehaviour
 
     void Update()
     {
-        myTR.position = PlayerTransform.position + offset;
-        myTR.transform.LookAt(PlayerTransform);
+        //myTR.position = PlayerTransform.position + offset;
+        //myTR.transform.LookAt(PlayerTransform);
     }
+    */
 }

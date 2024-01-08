@@ -13,12 +13,17 @@ public class LoginManager : MonoBehaviour
     public Button loginButn;
 
     private bool nullCheck;
+    public GameObject Checkpopup;
+    public GameObject DuplicatePopup;
 
-    private string serverURL = "https://soft-actors-shine.loca.lt";
+    private string serverURL = "http://localhost:3000";
 
     private void Awake()
     {
         nullCheck = false;
+
+        PlayerPrefs.SetString("Nickname", "");
+        PlayerPrefs.SetString("Username", "");
     }
 
     private void Update()
@@ -42,21 +47,15 @@ public class LoginManager : MonoBehaviour
         return true;
     }
 
-    [System.Serializable]
     public class LoginResponse
     {
         public string message;
     }
 
 
-    public void SignIn()
+    public void LogIn()
     {
         StartCoroutine(SendLogInRequest(usernameInput.text, passwordInput.text));
-    }
-
-    public void SignUpBtn()
-    {
-        SceneManager.LoadScene("signup");
     }
 
     IEnumerator SendLogInRequest(string username, string password)
@@ -65,7 +64,6 @@ public class LoginManager : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("username", username);
         form.AddField("password", password);
-
         using (UnityWebRequest request = UnityWebRequest.Post(url, form))
         {
             yield return request.SendWebRequest();
@@ -77,20 +75,18 @@ public class LoginManager : MonoBehaviour
                 try
                 {
                     LoginResponse response = JsonUtility.FromJson<LoginResponse>(jsonResponse);
-
-                    if (response.message == "Login successful")
+                    if (response.message == "success")
                     {
-                        Debug.Log("로그인 성공!!");
                         OnLoginSuccess(username);
-                        SceneManager.LoadScene("lobby");
+                        SceneManager.LoadScene("Lobby_A");
                     }
-                    else if (response.message == "Invalid username")
+                    else if (response.message == "username" || response.message == "password")
                     {
-                        Debug.Log("유효하지 않은 사용자명");
+                        Checkpopup.SetActive(true);
                     }
-                    else if (response.message == "Invalid password")
+                    else if (response.message == "already login")
                     {
-                        Debug.Log("유효하지 않은 비밀번호");
+                        DuplicatePopup.SetActive(true);
                     }
                     else
                     {
@@ -99,12 +95,12 @@ public class LoginManager : MonoBehaviour
                 }
                 catch (System.Exception e)
                 {
-                    Debug.LogError($"Error parsing JSON: {e.Message}");
+                    Debug.LogError("에러" + e.Message);
                 }
             }
             else
             {
-                Debug.LogError($"SignIn failed: {request.error}");
+                Debug.LogError("Login" + request.error);
             }
         }
     }
@@ -114,24 +110,26 @@ public class LoginManager : MonoBehaviour
         string url = $"{serverURL}/getLoginInfo";
         WWWForm form = new WWWForm();
         form.AddField("username", username);
-
         using (UnityWebRequest request = UnityWebRequest.Post(url, form))
         {
             yield return request.SendWebRequest();
-
             if (request.result == UnityWebRequest.Result.Success)
             {
                 string response = request.downloadHandler.text;
                 string nickname = ParseNicknameFromResponse(response);
 
                 PlayerPrefs.SetString("Nickname", nickname);
-               
-                string savedNickname = PlayerPrefs.GetString("Nickname", "DefaultNickname");
+                PlayerPrefs.SetString("Username", username);
+
+                string savedNickname = PlayerPrefs.GetString("Nickname");
                 Debug.Log("현재 닉네임: " + savedNickname);
+                PlayerPrefs.SetString("Name", savedNickname);  //혜진
+                PlayerPrefs.SetInt("IsGuest", 0);
+                SceneManager.LoadScene("Lobby_A");
             }
             else
             {
-                Debug.LogError($"GetLoginInfo failed: {request.error}");
+                Debug.LogError("GetLoginInfo:" + request.error);
             }
         }
     }
@@ -144,6 +142,24 @@ public class LoginManager : MonoBehaviour
     void OnLoginSuccess(string username)
     {
         StartCoroutine(GetLoginInfo(username));
+    }
+
+    public void PopUpClose()
+    {
+        Checkpopup.SetActive(false);
+        DuplicatePopup.SetActive(false);
+    }
+
+    public void GuestLogin()
+    {
+        SceneManager.LoadScene("Lobby_A");
+        PlayerPrefs.SetInt("IsGuest", 1);
+    }
+
+    public void AttemptLogout()
+    {
+        LogOutManager.Instance.LogOut(usernameInput.text);
+        PopUpClose();
     }
 
 }

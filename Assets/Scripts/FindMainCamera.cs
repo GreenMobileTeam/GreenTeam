@@ -21,7 +21,7 @@ public class FindMainCamera : MonoBehaviourPunCallbacks
 
         if (myPV.IsMine)
         {
-            mainCamera_script.PlayerTransform = myTR.transform;
+            //mainCamera_script.PlayerTransform = myTR.transform;
         }
     }
 

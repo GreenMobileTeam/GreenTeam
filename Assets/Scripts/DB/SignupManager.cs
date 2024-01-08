@@ -12,27 +12,56 @@ public class SignupManager : MonoBehaviour
     public TMP_InputField passwordCheckInput;
     public TMP_InputField nicknameInput;
 
+    public TMP_Text usernameCheck;
+    public TMP_Text nicknameCheck;
+    public TMP_Text passwordCheck;
+
     public Button signupButn;
 
-    private string serverURL = "https://soft-actors-shine.loca.lt";
+    private string serverURL = "http://localhost:3000";
 
     private bool nullCheck;
     private bool pwCheck;
-
     public bool nickCheck;
     public bool userCheck;
+    public bool wordCheck;
 
     private void Awake()
     {
         nickCheck = true;
         userCheck = true;
+        wordCheck = true;
         pwCheck = false;
         nullCheck = false;
     }
 
     private void Update()
     {
-        if(nullCheck = NullCheck() && !nickCheck && !userCheck)
+        pwCheck = ValidateInput();
+
+        if (!nickCheck && !wordCheck)
+        {
+            nicknameCheck.text = "o";
+            nicknameCheck.color = Color.green;
+        }
+        else
+        {
+            nicknameCheck.text = "x";
+            nicknameCheck.color = Color.red;
+        }
+
+        if (!userCheck)
+        {
+            usernameCheck.text = "o";
+            usernameCheck.color = Color.green;
+        }
+        else
+        {
+            usernameCheck.text = "x";
+            usernameCheck.color = Color.red;
+        }
+
+        if (nullCheck = NullCheck() && !nickCheck && !userCheck && !wordCheck)
         {
             signupButn.interactable = true;
         }
@@ -62,13 +91,18 @@ public class SignupManager : MonoBehaviour
 
     private bool ValidateInput()
     {
+        if (passwordInput.text == "" && passwordCheckInput.text == "")
+            return false;
+
         if (passwordInput.text != passwordCheckInput.text)
         {
-            Debug.LogError("비밀번호가 일치하지 않습니다.");
-            passwordInput.text = "";
-            passwordCheckInput.text = "";
+            passwordCheck.text = "x";
+            passwordCheck.color = Color.red;
             return false;
         }
+
+        passwordCheck.text = "o";
+        passwordCheck.color = Color.green;
         return true;
     }
     IEnumerator CheckDuplicate(string type, TMP_InputField value)
@@ -82,29 +116,35 @@ public class SignupManager : MonoBehaviour
             {
                 ResponseData responseData = JsonUtility.FromJson<ResponseData>(request.downloadHandler.text);
                 bool isDuplicate = responseData.isDuplicate;
-                Debug.Log($"{type}이 중복됨: {isDuplicate}");
+                Debug.Log(type + "중복 체크" + isDuplicate);
 
                 if (type == "username")
                 {
-                    userCheck = isDuplicate;
+                    if (isDuplicate)
+                    {
+                        value.text = "";
+                    }
+                    else
+                    {
+                        userCheck = isDuplicate;
+                    }
                 }
                 else if (type == "nickname")
                 {
-                    nickCheck = isDuplicate;
-                }
-
-                if (isDuplicate)
-                {
-                    value.text = "";
-                }
-                else
-                {
-
+                    if (isDuplicate)
+                    {
+                        value.text = "";
+                        nickCheck = isDuplicate;
+                    }
+                    else
+                    {
+                        StartCoroutine(CheckCensorship("nickname", value));
+                    }
                 }
             }
             else
             {
-                Debug.LogError($"중복 체크 실패: {request.error}");
+                Debug.LogError(" 중복 체크 오류 " + request.error);
             }
         }
     }
@@ -119,6 +159,38 @@ public class SignupManager : MonoBehaviour
         StartCoroutine(CheckDuplicate("nickname", nicknameInput));
     }
 
+    IEnumerator CheckCensorship(string type, TMP_InputField value)
+    {
+        string url = $"{serverURL}/checkCensorship/{type}/{value.text}";
+        using (UnityWebRequest request = UnityWebRequest.Get(url))
+        {
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                ResponseData responseData = JsonUtility.FromJson<ResponseData>(request.downloadHandler.text);
+                bool isCensored = responseData.isCensored;  
+                Debug.Log(type + "비속어 존재 : " + isCensored);
+
+                if (isCensored)
+                {
+                    value.text = "";
+                    wordCheck = true;
+                    nickCheck = false;
+                }
+                else
+                {
+                    wordCheck = false;
+                    nickCheck = false;
+                }
+            }
+            else
+            {
+                Debug.LogError("비속어 체크 오류 :" + request.error);
+            }
+        }
+    }
+
 
     IEnumerator SendSignUpRequest(string username, string password, string nickname)
     {
@@ -131,19 +203,17 @@ public class SignupManager : MonoBehaviour
         using (UnityWebRequest request = UnityWebRequest.Post(url, form))
         {
             yield return request.SendWebRequest();
-
-            pwCheck = ValidateInput();
-          
+                      
             if (pwCheck)
             {
                 if (request.result == UnityWebRequest.Result.Success)
                 {
-                    Debug.Log("회원가입 성공!");
+                    Debug.Log("회원가입 성공");
                     ReturnLoginScene();
                 }
                 else
                 {
-                    Debug.LogError($"회원가입 실패: {request.error}");
+                    Debug.LogError("회원가입 실패 : " + request.error);
                 }
             }
         }
@@ -152,11 +222,29 @@ public class SignupManager : MonoBehaviour
     public class ResponseData
     {
         public bool isDuplicate;
+        public bool isCensored;
     }
 
     public void ReturnLoginScene()
     {
         SceneManager.LoadScene("login");
+    }
+
+    public void OnUsernameValueChanged()
+    {
+        if(!userCheck)
+        {
+            userCheck = true;
+        }
+    }
+
+    public void OnNicknameValueChanged()
+    {
+        if (!nickCheck)
+        {
+            nickCheck = true;
+            wordCheck = true;
+        }
     }
 
 }

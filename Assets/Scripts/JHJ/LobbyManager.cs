@@ -1,7 +1,7 @@
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using TMPro;
 using System.Collections.Generic;
@@ -51,7 +51,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
        // base.OnCreateRoomFailed(returnCode, message);
-        PhotonNetwork.CreateRoom("ChatRoom" + roomNum, new RoomOptions { MaxPlayers = 10 });
+        PhotonNetwork.CreateRoom("Map_" + roomNum, new RoomOptions { MaxPlayers = 10 });
 
     }
 
@@ -60,14 +60,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         //base.OnJoinRandomFailed(returnCode, message);
         //connetState.text = "No empty room. Creating new room...";
         Debug.Log("Room is not existing");
-        PhotonNetwork.CreateRoom("ChatRoom"+roomNum, new RoomOptions { MaxPlayers = 10 });
+        PhotonNetwork.CreateRoom("Map_" + roomNum, new RoomOptions { MaxPlayers = 10 });
     }
 
     public override void OnJoinedRoom()
     {
         //base.OnJoinedRoom();
         //connetState.text = "Succes to join room";
-        string temp = "ChatRoom" + roomNum;
+        string temp = "Map_" + roomNum;
         PhotonNetwork.LoadLevel(temp);
     }
 
@@ -75,28 +75,47 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         //base.OnJoinRoomFailed(returnCode, message);
         Debug.Log("Connecting Room" +roomNum+ " failed. Reconnecting...");
-        PhotonNetwork.CreateRoom("ChatRoom" + roomNum, new RoomOptions { MaxPlayers = 10 });
+        PhotonNetwork.CreateRoom("Map_" + roomNum, new RoomOptions { MaxPlayers = 10 });
     }
 
     //rooms
-    public void RoomSelect()
+    public void Room1Secelct()
     {
-        GameObject clickedBtn = EventSystem.current.currentSelectedGameObject;
-        string name = clickedBtn.name;
-        roomNum = int.Parse(name.Substring(name.Length-1,1));
-        Debug.Log("Select" + roomNum + "Room");
-        ConnectRoom();
+        ConnectRoom("Map_1");
     }
 
-    void ConnectRoom()
+    public void Room2Secelct()
+    {
+        ConnectRoom("Map_2");
+    }
+
+    public void Room3Secelct()
+    {
+        ConnectRoom("Map_3");
+    }
+
+    public void LogOut()
+    {
+        SceneManager.LoadScene("Login");
+    }
+
+    void ConnectRoom(string roomName)
     {
         if (PhotonNetwork.IsConnected)
         {
             Debug.Log("Connecting Room" +roomNum+"...");
-            PhotonNetwork.LocalPlayer.NickName = "Tester" + Random.Range(0, 101);
+            Debug.Log(PlayerPrefs.GetString("Name"));
+            if (PlayerPrefs.GetInt("IsGuest") == 1)
+                PhotonNetwork.LocalPlayer.NickName = "Tester" + Random.Range(0, 101);
+            else
+            {
+                string[] temp = PlayerPrefs.GetString("Name").Split(":");
+                string t = temp[1].Substring(1,temp[1].Length-3); 
+                PhotonNetwork.LocalPlayer.NickName = t;
+            }
             //PhotonNetwork.JoinRandomRoom();
-            PhotonNetwork.JoinOrCreateRoom("ChatRoom" + roomNum, new RoomOptions { MaxPlayers = 10}, null);
-            PhotonNetwork.LoadLevel("ChatRoom"+roomNum);
+            PhotonNetwork.JoinOrCreateRoom("Map_" + roomNum, new RoomOptions { MaxPlayers = 10}, null);
+            PhotonNetwork.LoadLevel(roomName);
         }
         else
         {
