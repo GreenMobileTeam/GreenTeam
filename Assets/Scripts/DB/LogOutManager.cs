@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class LogOutManager : MonoBehaviour
 {
-    string serverURL = "http://localhost:3000";
+    string serverURL = "http://greenacademi.store";
 
     string username;
 

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class SessionChecker : MonoBehaviour
 {
-    private string serverURL = "http://localhost:3000"; // ¼­¹ö URL
+    string serverURL = "http://greenacademi.store";
 
     public float seconds;
 

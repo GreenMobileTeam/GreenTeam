@@ -6,14 +6,20 @@ using UnityEngine.Networking;
 
 public class LogoutBtn : MonoBehaviour
 {
-    string serverURL = "http://localhost:3000";
+    string serverURL = "http://greenacademi.store";
     string username;
     // Start is called before the first frame update
     public void LogOut()
     {
+        Debug.Log(PlayerPrefs.GetInt("IsGuest"));
+
         if (PlayerPrefs.GetInt("IsGuest") == 0)
         {
             StartCoroutine(SendLogoutRequest());
+        }
+        else if (PlayerPrefs.GetInt("IsGuest") == 1)
+        {
+            SceneManager.LoadScene("login");
         }
     }
 
