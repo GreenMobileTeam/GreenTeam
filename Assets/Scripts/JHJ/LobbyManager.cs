@@ -67,8 +67,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         //base.OnJoinedRoom();
         //connetState.text = "Succes to join room";
-        string temp = "Map_" + roomNum;
-        PhotonNetwork.LoadLevel(temp);
+        //string temp = "Map_" + roomNum;
+        //PhotonNetwork.LoadLevel(temp);
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
@@ -82,16 +82,19 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public void Room1Secelct()
     {
         ConnectRoom("Map_1");
+        SceneManager.LoadScene("Map_1");
     }
 
     public void Room2Secelct()
     {
         ConnectRoom("Map_2");
+        SceneManager.LoadScene("Map_2");
     }
 
     public void Room3Secelct()
     {
         ConnectRoom("Map_3");
+        SceneManager.LoadScene("Map_3");
     }
 
     public void LogOut()
@@ -110,6 +113,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             else
             {
                 string[] temp = PlayerPrefs.GetString("Name").Split(":");
+                Debug.Log(temp[0]+ temp[1]);
                 string t = temp[1].Substring(1,temp[1].Length-3); 
                 PhotonNetwork.LocalPlayer.NickName = t;
             }
