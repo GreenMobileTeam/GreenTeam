@@ -9,13 +9,12 @@ using TMPro;
 public class ChatManager : MonoBehaviourPunCallbacks
 {
     public Button sendBtn;
-    public Button MicOnOff;
+    public GameObject titleSendBtn;
     public TextMeshProUGUI chatLog;
     public TextMeshProUGUI chattingList;
     public TextMeshProUGUI filterWord;
     public TextMeshProUGUI title;
     public GameObject titleInput;
-    public GameObject titleBtn;
     public TMP_InputField input;
     public ScrollRect scroll_rect;
 
@@ -44,8 +43,6 @@ public class ChatManager : MonoBehaviourPunCallbacks
         string msg = "";
         inMsg = input.text;
         MsgDetect();
-        PlayerPrefs.SetString("Chat", inMsg);
-        PlayerPrefs.SetInt("Click", 1);
         if (PhotonNetwork.IsMasterClient)  //방장이라면
         {
             msg = string.Format("<color=#{0}>[☆{1}] {2}</color>", color, PhotonNetwork.LocalPlayer.NickName, inMsg);
@@ -60,34 +57,39 @@ public class ChatManager : MonoBehaviourPunCallbacks
         input.text = "";
     }
 
+    public void TitleUpdate_()
+    {
+        photonView.RPC("TitleUpdate", RpcTarget.OthersBuffered, titleInput_.text);
+        TitleUpdate(titleInput_.text);
+        titleInput_.ActivateInputField();
+    }
+
     void Update()
     {
         color = PlayerPrefs.GetString("Mycolor");
         chatterUpdate();
-        if (Input.GetKeyDown(KeyCode.Return)) SendButtonOnClicked();
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            TitleUpdate_();
+            SendButtonOnClicked();
+        }
 
-        if(input.text.Length > 1)
-        {
-            PlayerPrefs.SetInt("IsChatting", 1);
-        }
-        else
-        {
-            PlayerPrefs.SetInt("IsChatting", 0);
-        }
 
         if (PhotonNetwork.IsMasterClient) //방장이라면 타이틀 입력칸 뜸
         {
             titleInput.SetActive(true);
-            titleBtn.SetActive(true);
+            titleSendBtn.SetActive(true);
         }
         else
         {
             titleInput.SetActive(false);
-            titleBtn.SetActive(false);
+            titleSendBtn.SetActive(false);
         }
 
-        TitleUpdate();
+
     }
+
+
 
     void chatterUpdate()
     {
@@ -106,7 +108,6 @@ public class ChatManager : MonoBehaviourPunCallbacks
             chatters += s;
         }
         chattingList.text = chatters;
-        
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -175,8 +176,9 @@ public class ChatManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void TitleUpdate()
+    public void TitleUpdate(string txt)
     {
-        title.text = titleInput_.text;
+        //Debug.Log(txt);
+        title.text = txt;
     }
 }
