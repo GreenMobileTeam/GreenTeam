@@ -9,15 +9,16 @@ using TMPro;
 public class ChatManager : MonoBehaviourPunCallbacks
 {
     public Button sendBtn;
-    public Button MicOnOff;
+    public GameObject titleSendBtn;
     public TextMeshProUGUI chatLog;
     public TextMeshProUGUI chattingList;
     public TextMeshProUGUI filterWord;
     public TextMeshProUGUI title;
     public GameObject titleInput;
-    public GameObject titleBtn;
     public TMP_InputField input;
     public ScrollRect scroll_rect;
+    public GameObject winnerBtn;
+    public GameObject winnerPan;
 
     TMP_InputField titleInput_;
 
@@ -44,11 +45,9 @@ public class ChatManager : MonoBehaviourPunCallbacks
         string msg = "";
         inMsg = input.text;
         MsgDetect();
-        PlayerPrefs.SetString("Chat", inMsg);
-        PlayerPrefs.SetInt("Click", 1);
         if (PhotonNetwork.IsMasterClient)  //방장이라면
         {
-            msg = string.Format("<color=#{0}>[☆{1}] {2}</color>", color, PhotonNetwork.LocalPlayer.NickName, inMsg);
+            msg = string.Format("<color=#{0}>[☆{1}]</color> {2}", color, PhotonNetwork.LocalPlayer.NickName, inMsg);
         }
         else
         {
@@ -60,34 +59,25 @@ public class ChatManager : MonoBehaviourPunCallbacks
         input.text = "";
     }
 
+    public void TitleUpdate_()
+    {
+        photonView.RPC("TitleUpdate", RpcTarget.OthersBuffered, titleInput_.text);
+        TitleUpdate(titleInput_.text);
+        titleInput_.ActivateInputField();
+    }
+
     void Update()
     {
         color = PlayerPrefs.GetString("Mycolor");
         chatterUpdate();
-        if (Input.GetKeyDown(KeyCode.Return)) SendButtonOnClicked();
-
-        if(input.text.Length > 1)
+        if (Input.GetKeyDown(KeyCode.Return))
         {
-            PlayerPrefs.SetInt("IsChatting", 1);
+            TitleUpdate_();
+            SendButtonOnClicked();
         }
-        else
-        {
-            PlayerPrefs.SetInt("IsChatting", 0);
-        }
-
-        if (PhotonNetwork.IsMasterClient) //방장이라면 타이틀 입력칸 뜸
-        {
-            titleInput.SetActive(true);
-            titleBtn.SetActive(true);
-        }
-        else
-        {
-            titleInput.SetActive(false);
-            titleBtn.SetActive(false);
-        }
-
-        TitleUpdate();
     }
+
+
 
     void chatterUpdate()
     {
@@ -106,7 +96,6 @@ public class ChatManager : MonoBehaviourPunCallbacks
             chatters += s;
         }
         chattingList.text = chatters;
-        
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -114,6 +103,21 @@ public class ChatManager : MonoBehaviourPunCallbacks
         //base.OnPlayerEnteredRoom(newPlayer);
         string msg = string.Format("<color=#00ff00>[{0}]님이 입장하셨습니다.</color>", newPlayer.NickName);
         ReceiveMsg(msg);
+
+        if (PhotonNetwork.IsMasterClient) //방장이라면 타이틀 입력칸, 토론 승패 뜸
+        {
+            titleInput.SetActive(true);
+            titleSendBtn.SetActive(true);
+            winnerBtn.SetActive(true);
+            winnerPan.SetActive(true);
+        }
+        else
+        {
+            titleInput.SetActive(false);
+            titleSendBtn.SetActive(false);
+            winnerBtn.SetActive(false);
+            winnerPan.SetActive(false);
+        }
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
@@ -121,6 +125,21 @@ public class ChatManager : MonoBehaviourPunCallbacks
         //base.OnPlayerLeftRoom(otherPlayer);
         string msg = string.Format("<color=#ff0000>[{0}]님이 퇴장하셨습니다.</color>", otherPlayer.NickName);
         ReceiveMsg(msg);
+
+        if (PhotonNetwork.IsMasterClient) //방장이라면 타이틀 입력칸, 토론 승패 뜸
+        {
+            titleInput.SetActive(true);
+            titleSendBtn.SetActive(true);
+            winnerBtn.SetActive(true);
+            winnerPan.SetActive(true);
+        }
+        else
+        {
+            titleInput.SetActive(false);
+            titleSendBtn.SetActive(false);
+            winnerBtn.SetActive(false);
+            winnerPan.SetActive(false);
+        }
     }
 
     public void GoOut()
@@ -167,6 +186,38 @@ public class ChatManager : MonoBehaviourPunCallbacks
         inMsg = new string(worr);
     }
 
+    public void WinnerBlue()
+    {
+        WinUpdate("찬성", "0000FF");
+    }
+
+    public void WinnerRed()
+    {
+        WinUpdate("반대", "FF0000");
+    }
+
+    public void WinnerNone()
+    {
+        string n = string.Format("무승부 입니다~!");
+        string msg = string.Format("<color=#{0}>[☆{1}] {2}</color>", "FFFFFF", PhotonNetwork.LocalPlayer.NickName, n);
+        photonView.RPC("ReceiveMsg", RpcTarget.OthersBuffered, msg);
+        ReceiveMsg(msg);
+        input.ActivateInputField(); // 반대는 input.select(); (반대로 토글)
+        input.text = "";
+    }
+
+    
+
+    void WinUpdate(string winner, string color)
+    {
+        string n = string.Format("승리한 팀은 {0}팀 입니다~!",winner);
+        string msg = string.Format("<color=#{0}>[☆{1}] {2}</color>", color, PhotonNetwork.LocalPlayer.NickName, n);
+        photonView.RPC("ReceiveMsg", RpcTarget.OthersBuffered, msg);
+        ReceiveMsg(msg);
+        input.ActivateInputField(); // 반대는 input.select(); (반대로 토글)
+        input.text = "";
+    }
+
     [PunRPC]
     public void ReceiveMsg(string msg)
     {
@@ -175,8 +226,9 @@ public class ChatManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void TitleUpdate()
+    public void TitleUpdate(string txt)
     {
-        title.text = titleInput_.text;
+        //Debug.Log(txt);
+        title.text = txt;
     }
 }

@@ -6,33 +6,43 @@ using UnityEngine.Networking;
 
 public class LogoutBtn : MonoBehaviour
 {
-    string serverURL = "http://localhost:3000";
+    string serverURL = "http://greenacademi.store";
     string username;
     // Start is called before the first frame update
     public void LogOut()
     {
+        Debug.Log(PlayerPrefs.GetInt("IsGuest"));
+
         if (PlayerPrefs.GetInt("IsGuest") == 0)
         {
-            username = PlayerPrefs.GetString("Username");
-            StartCoroutine(SendLogoutRequest(username));
+            StartCoroutine(SendLogoutRequest());
         }
-        SceneManager.LoadScene("login");
+        else if (PlayerPrefs.GetInt("IsGuest") == 1)
+        {
+            SceneManager.LoadScene("login");
+        }
     }
 
-    IEnumerator SendLogoutRequest(string username)
+    IEnumerator SendLogoutRequest()
     {
         string url = $"{serverURL}/logout";
 
         WWWForm form = new WWWForm();
+
+        username = PlayerPrefs.GetString("Username");
+        Debug.LogWarning(username);
         form.AddField("username", username);
 
         using (UnityWebRequest www = UnityWebRequest.Post(url, form))
         {
             yield return www.SendWebRequest();
 
+
             if (www.result == UnityWebRequest.Result.Success)
             {
                 Debug.Log("로그아웃 성공");
+
+                SceneManager.LoadScene("login");
             }
             else
             {

@@ -18,7 +18,7 @@ public class SignupManager : MonoBehaviour
 
     public Button signupButn;
 
-    private string serverURL = "http://localhost:3000";
+    string serverURL = "http://greenacademi.store";
 
     private bool nullCheck;
     private bool pwCheck;

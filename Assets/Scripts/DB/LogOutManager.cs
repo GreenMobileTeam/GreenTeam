@@ -6,16 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class LogOutManager : MonoBehaviour
 {
-    string serverURL = "http://localhost:3000";
+    string serverURL = "http://greenacademi.store";
 
     string username;
 
     private static LogOutManager instance = null;
-
-    internal void LogOut()
-    {
-        throw new NotImplementedException();
-    }
 
     void Awake()
     {
@@ -42,16 +37,18 @@ public class LogOutManager : MonoBehaviour
         }
     }
 
-    public void LogOut(string username)
+    public void LogOut()
     {
-        StartCoroutine(SendLogoutRequest(username));
+        StartCoroutine(SendLogoutRequest());
     }
 
-    IEnumerator SendLogoutRequest(string username)
+    IEnumerator SendLogoutRequest()
     {
         string url = $"{serverURL}/logout";
 
         WWWForm form = new WWWForm();
+
+        username = PlayerPrefs.GetString("Username");
         form.AddField("username", username);
 
         using (UnityWebRequest www = UnityWebRequest.Post(url, form))
@@ -71,7 +68,7 @@ public class LogOutManager : MonoBehaviour
 
     public void OnApplicationQuit()
     {
-        if(PlayerPrefs.GetInt("IsGuest") == 0)
-            LogOut(PlayerPrefs.GetString("Username"));
+        if (PlayerPrefs.GetInt("IsGuest") == 0)
+            LogOut();
     }
 }

@@ -64,6 +64,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             case Character.ghostA:
                 ChangeColor(gPrefabs[0],gColors[PlayerPrefs.GetInt("gColor")]);
                 playerGhost = PhotonNetwork.Instantiate("GhostA", spawnpoint.position, spawnpoint.rotation, 0);
+                //playerGhost = PhotonNetwork.Instantiate("Test", spawnpoint.position, spawnpoint.rotation, 0);
                 break;
             case Character.ghostB:
                 ChangeColor(gPrefabs[1], gColors[PlayerPrefs.GetInt("gColor")]);

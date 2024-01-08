@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class SessionChecker : MonoBehaviour
 {
-    private string serverURL = "http://localhost:3000"; // 서버 URL
+    string serverURL = "http://greenacademi.store";
 
     public float seconds;
 
@@ -75,7 +75,7 @@ public class SessionChecker : MonoBehaviour
                 else if (response.message == "auto logout")
                 {
                     Debug.Log("다른 곳에서 로그인");
-                    SceneManager.LoadScene("login");
+                    SceneManager.LoadScene(0);
                 }
             }
             else
