@@ -18,6 +18,9 @@ public class SignupManager : MonoBehaviour
 
     public Button signupButn;
 
+    public GameObject Checkpopup;
+    public TMP_Text checkText;
+
     string serverURL = "http://greenacademi.store";
 
     private bool nullCheck;
@@ -38,6 +41,8 @@ public class SignupManager : MonoBehaviour
     private void Update()
     {
         pwCheck = ValidateInput();
+        Debug.Log("닉네임 체크 : " + nickCheck);
+        Debug.Log("닉네임 체크 : " + userCheck);
 
         if (!nickCheck && !wordCheck)
         {
@@ -122,10 +127,12 @@ public class SignupManager : MonoBehaviour
                 {
                     if (isDuplicate)
                     {
-                        value.text = "";
+                        checkText.text = "이미 존재하는 아이디입니다.";
+                        Checkpopup.SetActive(true);
+                        userCheck = isDuplicate;
                     }
                     else
-                    {
+                    { 
                         userCheck = isDuplicate;
                     }
                 }
@@ -133,7 +140,8 @@ public class SignupManager : MonoBehaviour
                 {
                     if (isDuplicate)
                     {
-                        value.text = "";
+                        checkText.text = "이미 존재하는 닉네임입니다.";
+                        Checkpopup.SetActive(true);
                         nickCheck = isDuplicate;
                     }
                     else
@@ -174,7 +182,9 @@ public class SignupManager : MonoBehaviour
 
                 if (isCensored)
                 {
-                    value.text = "";
+                    checkText.text = "사용 불가능한 단어가\n포함되어 있습니다.";
+                    Checkpopup.SetActive(true);
+                    nicknameInput.text = "";
                     wordCheck = true;
                     nickCheck = false;
                 }
@@ -245,6 +255,11 @@ public class SignupManager : MonoBehaviour
             nickCheck = true;
             wordCheck = true;
         }
+    }
+
+    public void PopUpClose()
+    {
+        Checkpopup.SetActive(false);
     }
 
 }

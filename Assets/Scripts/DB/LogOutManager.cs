@@ -42,6 +42,11 @@ public class LogOutManager : MonoBehaviour
         StartCoroutine(SendLogoutRequest());
     }
 
+    public void LogOutTemp()
+    {
+        StartCoroutine(SendLogoutRequestTemp());
+    }
+
     IEnumerator SendLogoutRequest()
     {
         string url = $"{serverURL}/logout";
@@ -66,9 +71,47 @@ public class LogOutManager : MonoBehaviour
         }
     }
 
+    IEnumerator SendLogoutRequestTemp()
+    {
+        string url = $"{serverURL}/logout";
+
+        WWWForm form = new WWWForm();
+
+        username = PlayerPrefs.GetString("Username");
+        form.AddField("username", username);
+
+        using (UnityWebRequest www = UnityWebRequest.Post(url, form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result == UnityWebRequest.Result.Success)
+            {
+                Debug.Log("로그아웃 성공");
+                SceneManager.LoadScene("login");
+            }
+            else
+            {
+                Debug.LogError("서버 오류 : " + www.error);
+            }
+        }
+    }
+
     public void OnApplicationQuit()
     {
         if (PlayerPrefs.GetInt("IsGuest") == 0)
-            LogOut();
+            LogOutTemp();
     }
+
+    private void OnApplicationPause(bool pauseStatus)
+    {
+        if (pauseStatus)
+        {
+            if (PlayerPrefs.GetInt("IsGuest") == 0)
+                LogOutTemp();
+        }
+        else
+        {
+        }
+    }
+
 }

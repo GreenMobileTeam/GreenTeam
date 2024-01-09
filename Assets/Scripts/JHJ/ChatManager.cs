@@ -37,6 +37,9 @@ public class ChatManager : MonoBehaviourPunCallbacks
         else
             color = PlayerPrefs.GetString("Mycolor");
         titleInput_ = titleInput.GetComponent<TMP_InputField>();
+
+        MasterCheck();
+
     }
 
     public void SendButtonOnClicked()
@@ -104,20 +107,7 @@ public class ChatManager : MonoBehaviourPunCallbacks
         string msg = string.Format("<color=#00ff00>[{0}]님이 입장하셨습니다.</color>", newPlayer.NickName);
         ReceiveMsg(msg);
 
-        if (PhotonNetwork.IsMasterClient) //방장이라면 타이틀 입력칸, 토론 승패 뜸
-        {
-            titleInput.SetActive(true);
-            titleSendBtn.SetActive(true);
-            winnerBtn.SetActive(true);
-            winnerPan.SetActive(true);
-        }
-        else
-        {
-            titleInput.SetActive(false);
-            titleSendBtn.SetActive(false);
-            winnerBtn.SetActive(false);
-            winnerPan.SetActive(false);
-        }
+        MasterCheck();
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
@@ -126,8 +116,16 @@ public class ChatManager : MonoBehaviourPunCallbacks
         string msg = string.Format("<color=#ff0000>[{0}]님이 퇴장하셨습니다.</color>", otherPlayer.NickName);
         ReceiveMsg(msg);
 
+        MasterCheck();
+    }
+    
+    void MasterCheck()
+    {
+        /*
         if (PhotonNetwork.IsMasterClient) //방장이라면 타이틀 입력칸, 토론 승패 뜸
         {
+            //WinUpdate("방장", "00FF00");
+            MasterUpdate();
             titleInput.SetActive(true);
             titleSendBtn.SetActive(true);
             winnerBtn.SetActive(true);
@@ -140,6 +138,7 @@ public class ChatManager : MonoBehaviourPunCallbacks
             winnerBtn.SetActive(false);
             winnerPan.SetActive(false);
         }
+        */
     }
 
     public void GoOut()
@@ -212,6 +211,16 @@ public class ChatManager : MonoBehaviourPunCallbacks
     {
         string n = string.Format("승리한 팀은 {0}팀 입니다~!",winner);
         string msg = string.Format("<color=#{0}>[☆{1}] {2}</color>", color, PhotonNetwork.LocalPlayer.NickName, n);
+        photonView.RPC("ReceiveMsg", RpcTarget.OthersBuffered, msg);
+        ReceiveMsg(msg);
+        input.ActivateInputField(); // 반대는 input.select(); (반대로 토글)
+        input.text = "";
+    }
+
+    void MasterUpdate()
+    {
+        string n = string.Format("방장은 {0}님 입니다~!", PhotonNetwork.LocalPlayer.NickName);
+        string msg = string.Format("<color=#FF00FF>{0}</color>",  n);
         photonView.RPC("ReceiveMsg", RpcTarget.OthersBuffered, msg);
         ReceiveMsg(msg);
         input.ActivateInputField(); // 반대는 input.select(); (반대로 토글)
