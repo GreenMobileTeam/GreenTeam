@@ -1,6 +1,6 @@
 using Photon.Pun;
 using UnityEngine;
-using Photon.Voice.PUN;
+//using Photon.Voice.PUN;
 using TMPro;
 using System.Collections;
 
@@ -11,7 +11,7 @@ public class VoiceDetector : MonoBehaviourPunCallbacks
     public GameObject chatBox_;
     public TextMeshProUGUI chat;
     //public Image speakerImage;
-    public PhotonVoiceView photonVoiceView;
+    //public PhotonVoiceView photonVoiceView;
     public TextMeshProUGUI name_;
 
     bool flag = false;
@@ -26,15 +26,21 @@ public class VoiceDetector : MonoBehaviourPunCallbacks
     private void Start()
     {
         name_.text = PhotonNetwork.LocalPlayer.NickName;
-        Debug.Log("L");
         talkImg.SetActive(false);
         chatBox_.SetActive(false);
-        PlayerPrefs.SetInt("IsChatting", 0);
+       // PlayerPrefs.SetInt("IsChatting", 0);
     }
+
+
 
     // Update is called once per frame 
     void Update()
     {
+
+        //this.speakerImage.enabled = this.photonVoiceView.IsSpeaking;
+
+        /*
+         *         
         if (this.photonVoiceView.IsRecording)
         {
             Debug.Log("is on");
@@ -42,15 +48,13 @@ public class VoiceDetector : MonoBehaviourPunCallbacks
         }
         else
             this.micImage.SetActive(false);
-        //this.speakerImage.enabled = this.photonVoiceView.IsSpeaking;
-
         if(PlayerPrefs.GetInt("IsChatting") == 1)
         {
-            talkImg.SetActive(true);
+            MicImg(true);
         }
         else
         {
-            talkImg.SetActive(false);
+            MicImg(false);
         }
 
         if(Input.GetKeyDown(KeyCode.Escape) || PlayerPrefs.GetInt("Click") == 1)
@@ -59,8 +63,11 @@ public class VoiceDetector : MonoBehaviourPunCallbacks
             StopAllCoroutines();
             StartCoroutine(startChat());
         }
+        */
     }
 
+    /*
+    [PunRPC]
     IEnumerator startChat()
     {
         chatBox_.SetActive(true);
@@ -70,4 +77,18 @@ public class VoiceDetector : MonoBehaviourPunCallbacks
         chatBox_.SetActive(false);
         chat.text = "";
     }
+
+    [PunRPC]
+    void MicImg(bool isOn)
+    {
+        if (isOn)
+        {
+            this.micImage.SetActive(true);
+        }
+        else
+        {
+            this.micImage.SetActive(false);
+        }
+    }
+    */
 }

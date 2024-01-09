@@ -6,7 +6,9 @@ public class ColorManager : MonoBehaviour
 {
     private void Start()
     {
-        PlayerPrefs.SetString("Myscolor", "FFFFFF");
+        PlayerPrefs.DeleteAll();
+        if (!PlayerPrefs.HasKey("Mycolor"))
+            PlayerPrefs.SetString("Mycolor", "FFFFFF");
     }
 
     public void RedSelect()
