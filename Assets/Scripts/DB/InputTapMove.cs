@@ -42,4 +42,5 @@ public class InputTapMove : MonoBehaviour
         }
     }
 #endif
+    }
 }
