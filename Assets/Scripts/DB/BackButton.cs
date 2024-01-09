@@ -69,10 +69,22 @@ public class BackButton : MonoBehaviour
                 SceneManager.LoadScene("Lobby_A");
             }
         }
+
+        if(Input
 #endif
     }
     void DoubleClick()
     {
         ClickCount = 0;
+    }
+    private void OnApplicationPause(bool pauseStatus)
+    {
+        if (pauseStatus)
+        {
+            LogOutManager.Instance.LogOut();
+        }
+        else
+        {
+        }
     }
 }

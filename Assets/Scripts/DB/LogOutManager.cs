@@ -58,6 +58,7 @@ public class LogOutManager : MonoBehaviour
             if (www.result == UnityWebRequest.Result.Success)
             {
                 Debug.Log("로그아웃 성공");
+                SceneManager.LoadScene("login");
             }
             else
             {
@@ -71,4 +72,16 @@ public class LogOutManager : MonoBehaviour
         if (PlayerPrefs.GetInt("IsGuest") == 0)
             LogOut();
     }
+
+    private void OnApplicationPause(bool pauseStatus)
+    {
+        if (pauseStatus)
+        {
+            LogOut();
+        }
+        else
+        {
+        }
+    }
+
 }
