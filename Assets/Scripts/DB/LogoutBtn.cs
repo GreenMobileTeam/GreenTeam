@@ -41,8 +41,6 @@ public class LogoutBtn : MonoBehaviour
             if (www.result == UnityWebRequest.Result.Success)
             {
                 Debug.Log("로그아웃 성공");
-
-                SceneManager.LoadScene("login");
             }
             else
             {
