@@ -58,7 +58,6 @@ public class LogOutManager : MonoBehaviour
             if (www.result == UnityWebRequest.Result.Success)
             {
                 Debug.Log("로그아웃 성공");
-                SceneManager.LoadScene("login");
             }
             else
             {
@@ -78,6 +77,7 @@ public class LogOutManager : MonoBehaviour
         if (pauseStatus)
         {
             LogOut();
+            SceneManager.LoadScene("login");
         }
         else
         {

@@ -40,22 +40,22 @@ public class BackButton : MonoBehaviour
 #if UNITY_ANDROID
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if(SceneManager.GetActiveScene().buildIndex ==0)
+            if(SceneManager.GetActiveScene().buildIndex ==0 || SceneManager.GetActiveScene().buildIndex ==1)
             {
                 ClickCount++;
-                if (!IsInvoking("DoubleClick")) 
-                    Invoke("DoubleClick", 1.0f);
-                if (ClickCount == 2)
-                {
-                    CancelInvoke("DoubleClick");
-                    Application.Quit();
-                }
-        }
-            else if(SceneManager.GetActiveScene().buildIndex == 1)
+                    if (!IsInvoking("DoubleClick")) 
+                        Invoke("DoubleClick", 1.0f);
+                    if (ClickCount == 2)
+                    {
+                        CancelInvoke("DoubleClick");
+                        Application.Quit();
+                    }
+            }
+            else if(SceneManager.GetActiveScene().buildIndex == 2)
             {
                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
             }
-            else if(SceneManager.GetActiveScene().buildIndex == 2)
+            else if(SceneManager.GetActiveScene().buildIndex == 3)
             {
                 if (PlayerPrefs.GetInt("IsGuest") == 0)
                 {
@@ -69,22 +69,10 @@ public class BackButton : MonoBehaviour
                 SceneManager.LoadScene("Lobby_A");
             }
         }
-
-        if(Input
 #endif
     }
     void DoubleClick()
     {
         ClickCount = 0;
-    }
-    private void OnApplicationPause(bool pauseStatus)
-    {
-        if (pauseStatus)
-        {
-            LogOutManager.Instance.LogOut();
-        }
-        else
-        {
-        }
     }
 }
