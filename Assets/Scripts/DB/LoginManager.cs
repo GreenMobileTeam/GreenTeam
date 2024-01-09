@@ -80,7 +80,6 @@ public class LoginManager : MonoBehaviour
                     {
                         OnLoginSuccess(username);
                         PlayerPrefs.SetInt("IsGuest", 0);
-                        SceneManager.LoadScene("Lobby_A");
                     }
                     else if (response.message == "username" || response.message == "password")
                     {

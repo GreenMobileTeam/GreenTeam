@@ -6,24 +6,25 @@ using System.Collections;
 public class PlayerName : MonoBehaviourPunCallbacks
 {
     public TextMeshProUGUI name_;
+    PhotonView pv;
 
     private IEnumerator Start()
     {
+        name_.text = "이름 로딩중";
+        pv = GetComponent<PhotonView>();
         yield return new WaitForSeconds(3f);
-        if (PlayerPrefs.GetInt("IsGuest") == 1)
+        if (pv.IsMine)
         {
-            string n = PhotonNetwork.LocalPlayer.NickName;
+            string n = PlayerPrefs.GetString("GhostName");
             name_.text = n;
+            pv.RPC("UpdateNick", RpcTarget.All, n);
+            UpdateNick(n);
         }
-        else
-        {
-            string[] temp = PlayerPrefs.GetString("Nickname").Split(":");
-            string n = temp[1].Substring(1, temp[1].Length - 3);
+    }
 
-            if (n == PhotonNetwork.LocalPlayer.NickName)
-            {
-                name_.text = n;
-            }
-        }
+    [PunRPC]
+    void UpdateNick(string name)
+    {
+        name_.text = name;
     }
 }
