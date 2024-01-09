@@ -113,7 +113,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             {
                 string n = "Tester" + Random.Range(0, 101);
                 PhotonNetwork.LocalPlayer.NickName = n;
-                PlayerPrefs.SetString("GuestName", n);
+                PlayerPrefs.SetString("GhostName", n);
             }
             else
             {
@@ -127,6 +127,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
                     Debug.Log(temp[0] + temp[1]);
                     string t = temp[1].Substring(1, temp[1].Length - 3);
                     PhotonNetwork.LocalPlayer.NickName = t;
+                    PlayerPrefs.SetString("GhostName", t);
                 }
             }
             //PhotonNetwork.JoinRandomRoom();
