@@ -40,7 +40,7 @@ public class InputTapMove : MonoBehaviour
                 next.Select();
             }
         }
-    }
 #endif
     }
 }
+
