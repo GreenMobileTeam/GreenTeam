@@ -67,8 +67,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         //base.OnJoinedRoom();
         //connetState.text = "Succes to join room";
-        string temp = "Map_" + roomNum;
-        PhotonNetwork.LoadLevel(temp);
+        //string temp = "Map_" + roomNum;
+        //PhotonNetwork.LoadLevel(temp);
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
@@ -82,16 +82,19 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public void Room1Secelct()
     {
         ConnectRoom("Map_1");
+        SceneManager.LoadScene("Map_1");
     }
 
     public void Room2Secelct()
     {
         ConnectRoom("Map_2");
+        SceneManager.LoadScene("Map_2");
     }
 
     public void Room3Secelct()
     {
         ConnectRoom("Map_3");
+        SceneManager.LoadScene("Map_3");
     }
 
     public void LogOut()
@@ -104,14 +107,27 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsConnected)
         {
             Debug.Log("Connecting Room" +roomNum+"...");
-            Debug.Log(PlayerPrefs.GetString("Name"));
+            string n_ = PlayerPrefs.GetString("Nickname");
+            Debug.Log(PlayerPrefs.GetString("Nickname"));
             if (PlayerPrefs.GetInt("IsGuest") == 1)
-                PhotonNetwork.LocalPlayer.NickName = "Tester" + Random.Range(0, 101);
+            {
+                string n = "Tester" + Random.Range(0, 101);
+                PhotonNetwork.LocalPlayer.NickName = n;
+                PlayerPrefs.SetString("GuestName", n);
+            }
             else
             {
-                string[] temp = PlayerPrefs.GetString("Name").Split(":");
-                string t = temp[1].Substring(1,temp[1].Length-3); 
-                PhotonNetwork.LocalPlayer.NickName = t;
+                if (n_ == "" || n_ == " ")
+                {
+                    Debug.Log("Name Error");
+                }
+                else
+                {
+                    string[] temp = n_.Split(":");
+                    Debug.Log(temp[0] + temp[1]);
+                    string t = temp[1].Substring(1, temp[1].Length - 3);
+                    PhotonNetwork.LocalPlayer.NickName = t;
+                }
             }
             //PhotonNetwork.JoinRandomRoom();
             PhotonNetwork.JoinOrCreateRoom("Map_" + roomNum, new RoomOptions { MaxPlayers = 10}, null);

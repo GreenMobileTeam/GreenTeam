@@ -32,12 +32,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedLobby()
     {
-        Debug.Log($"PhotonNetwork.InLobby = {PhotonNetwork.InLobby}");
+        //Debug.Log($"PhotonNetwork.InLobby = {PhotonNetwork.InLobby}");
         PhotonNetwork.JoinRandomRoom();
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
+        /*
         Debug.Log($"JoinRandom Faild {returnCode}:{message}");
 
         RoomOptions ro = new RoomOptions();
@@ -46,12 +47,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         ro.IsVisible = true;
 
         PhotonNetwork.CreateRoom("New Room", ro);
+        */
     }
 
     public override void OnCreatedRoom()
     {
-        Debug.Log("Created Room");
-        Debug.Log($"Room Name = {PhotonNetwork.CurrentRoom.Name}");
+        //Debug.Log("Created Room");
+        //Debug.Log($"Room Name = {PhotonNetwork.CurrentRoom.Name}");
     }
 
     public override void OnJoinedRoom()

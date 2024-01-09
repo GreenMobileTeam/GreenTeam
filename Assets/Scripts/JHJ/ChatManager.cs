@@ -106,6 +106,7 @@ public class ChatManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient) //방장이라면 타이틀 입력칸, 토론 승패 뜸
         {
+            
             titleInput.SetActive(true);
             titleSendBtn.SetActive(true);
             winnerBtn.SetActive(true);
@@ -128,6 +129,7 @@ public class ChatManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient) //방장이라면 타이틀 입력칸, 토론 승패 뜸
         {
+            WinUpdate("방장", "00FF00");
             titleInput.SetActive(true);
             titleSendBtn.SetActive(true);
             winnerBtn.SetActive(true);

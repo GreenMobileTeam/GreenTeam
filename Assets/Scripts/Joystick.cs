@@ -70,7 +70,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
 
     void FixedUpdate()
     {
-        StopToWall();    
+        //StopToWall();    
     }
 
     void StopToWall()

@@ -122,11 +122,20 @@ public class LoginManager : MonoBehaviour
             {
                 string response = request.downloadHandler.text;
                 string nickname = ParseNicknameFromResponse(response);
-                PlayerPrefs.SetString("Nickname", nickname);
-                string savedNickname = PlayerPrefs.GetString("Nickname");
-                Debug.Log("현재 닉네임: " + savedNickname);
-                PlayerPrefs.SetString("Name", savedNickname);  //혜진
-                SceneManager.LoadScene("Lobby_A");
+                if(nickname == "" || nickname == " ")
+                {
+                    Debug.Log("Name is empty");
+                    LogIn();
+                }
+                else
+                {
+                    PlayerPrefs.SetString("Nickname", nickname);
+                    string savedNickname = PlayerPrefs.GetString("Nickname");
+                    Debug.Log("현재 닉네임: " + savedNickname);
+                    yield return new WaitForSeconds(1f);
+                    //PlayerPrefs.SetString("Name", savedNickname);  //혜진
+                    SceneManager.LoadScene("Lobby_A");
+                }
             }
             else
             {
