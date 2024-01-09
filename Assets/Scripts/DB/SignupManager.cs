@@ -18,6 +18,8 @@ public class SignupManager : MonoBehaviour
 
     public Button signupButn;
 
+    public GameObject Checkpopup;
+
     string serverURL = "http://greenacademi.store";
 
     private bool nullCheck;
@@ -38,6 +40,8 @@ public class SignupManager : MonoBehaviour
     private void Update()
     {
         pwCheck = ValidateInput();
+        Debug.Log("닉네임 체크 : " + nickCheck);
+        Debug.Log("닉네임 체크 : " + userCheck);
 
         if (!nickCheck && !wordCheck)
         {
@@ -122,7 +126,7 @@ public class SignupManager : MonoBehaviour
                 {
                     if (isDuplicate)
                     {
-                        value.text = "";
+                        userCheck = isDuplicate;
                     }
                     else
                     {
@@ -133,7 +137,6 @@ public class SignupManager : MonoBehaviour
                 {
                     if (isDuplicate)
                     {
-                        value.text = "";
                         nickCheck = isDuplicate;
                     }
                     else
@@ -174,7 +177,8 @@ public class SignupManager : MonoBehaviour
 
                 if (isCensored)
                 {
-                    value.text = "";
+                    Checkpopup.SetActive(true);
+                    nicknameInput.text = "";
                     wordCheck = true;
                     nickCheck = false;
                 }
@@ -245,6 +249,11 @@ public class SignupManager : MonoBehaviour
             nickCheck = true;
             wordCheck = true;
         }
+    }
+
+    public void PopUpClose()
+    {
+        Checkpopup.SetActive(false);
     }
 
 }
