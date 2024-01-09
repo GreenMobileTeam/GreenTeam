@@ -12,12 +12,18 @@ public class InputTapMove : MonoBehaviour
 
     private void Start()
     {
+#if UNITY_ANDROID
+#else
         system = EventSystem.current;
         firstInput.Select();
+#endif
     }
 
     private void Update()
     {
+#if UNITY_ANDROID
+#else
+
         if (Input.GetKeyDown(KeyCode.Tab) && Input.GetKey(KeyCode.LeftShift))
         {
             Selectable previous = system.currentSelectedGameObject.GetComponent<Selectable>().FindSelectableOnUp();
@@ -35,4 +41,5 @@ public class InputTapMove : MonoBehaviour
             }
         }
     }
+#endif
 }
