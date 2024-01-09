@@ -69,8 +69,6 @@ public class BackButton : MonoBehaviour
                 SceneManager.LoadScene("Lobby_A");
             }
         }
-
-        if(Input
 #endif
     }
     void DoubleClick()
