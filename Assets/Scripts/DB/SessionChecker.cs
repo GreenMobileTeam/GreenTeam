@@ -75,7 +75,7 @@ public class SessionChecker : MonoBehaviour
                 else if (response.message == "auto logout")
                 {
                     Debug.Log("다른 곳에서 로그인");
-                    SceneManager.LoadScene(0);
+                    SceneManager.LoadScene("login");
                 }
             }
             else

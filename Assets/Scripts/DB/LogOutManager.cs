@@ -106,7 +106,8 @@ public class LogOutManager : MonoBehaviour
     {
         if (pauseStatus)
         {
-            LogOutTemp();
+            if (PlayerPrefs.GetInt("IsGuest") == 0)
+                LogOutTemp();
         }
         else
         {

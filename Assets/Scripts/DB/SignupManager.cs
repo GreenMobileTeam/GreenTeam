@@ -132,7 +132,7 @@ public class SignupManager : MonoBehaviour
                         userCheck = isDuplicate;
                     }
                     else
-                    {
+                    { 
                         userCheck = isDuplicate;
                     }
                 }
