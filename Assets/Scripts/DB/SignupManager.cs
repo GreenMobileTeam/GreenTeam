@@ -19,6 +19,7 @@ public class SignupManager : MonoBehaviour
     public Button signupButn;
 
     public GameObject Checkpopup;
+    public TMP_Text checkText;
 
     string serverURL = "http://greenacademi.store";
 
@@ -126,6 +127,8 @@ public class SignupManager : MonoBehaviour
                 {
                     if (isDuplicate)
                     {
+                        checkText.text = "이미 존재하는 아이디입니다.";
+                        Checkpopup.SetActive(true);
                         userCheck = isDuplicate;
                     }
                     else
@@ -137,6 +140,8 @@ public class SignupManager : MonoBehaviour
                 {
                     if (isDuplicate)
                     {
+                        checkText.text = "이미 존재하는 닉네임입니다.";
+                        Checkpopup.SetActive(true);
                         nickCheck = isDuplicate;
                     }
                     else
@@ -177,6 +182,7 @@ public class SignupManager : MonoBehaviour
 
                 if (isCensored)
                 {
+                    checkText.text = "사용 불가능한 단어가\n포함되어 있습니다.";
                     Checkpopup.SetActive(true);
                     nicknameInput.text = "";
                     wordCheck = true;
