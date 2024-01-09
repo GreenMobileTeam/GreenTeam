@@ -1774,6 +1774,7 @@ MonoBehaviour:
   passwordCheck: {fileID: 127777838}
   signupButn: {fileID: 1169731461}
   Checkpopup: {fileID: 433542377}
+  checkText: {fileID: 877246431}
   nickCheck: 0
   userCheck: 0
   wordCheck: 0
