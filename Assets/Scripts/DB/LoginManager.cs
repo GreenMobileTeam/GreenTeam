@@ -16,6 +16,8 @@ public class LoginManager : MonoBehaviour
     public GameObject Checkpopup;
     public GameObject DuplicatePopup;
 
+    public GameObject Loading;
+
     string serverURL = "http://greenacademi.store";
 
     private void Awake()
@@ -128,12 +130,21 @@ public class LoginManager : MonoBehaviour
                 }
                 else
                 {
+                    /*
                     PlayerPrefs.SetString("Nickname", nickname);
                     string savedNickname = PlayerPrefs.GetString("Nickname");
-                    Debug.Log("현재 닉네임: " + savedNickname);
+                    */
+                    string[] temp = nickname.Split(":");
+                    string n = temp[1].Substring(1, temp[1].Length - 3);
+                    GameManager.instance.myName = n;
+                    GameManager.instance.isGuest = false;
+                    Debug.Log("현재 닉네임: " + n);
+                    Loading.SetActive(true);
                     yield return new WaitForSeconds(1f);
+                    Loading.SetActive(false);
                     //PlayerPrefs.SetString("Name", savedNickname);  //혜진
-                    SceneManager.LoadScene("Lobby_A");
+                    //SceneManager.LoadScene("Lobby_A");
+                    GameManager.instance.LoginSuccess();
                 }
             }
             else
@@ -170,5 +181,6 @@ public class LoginManager : MonoBehaviour
         PlayerPrefs.SetString("Username", usernameInput.text);
         LogOutManager.Instance.LogOut();
         PopUpClose();
+        LogIn();
     }
 }
