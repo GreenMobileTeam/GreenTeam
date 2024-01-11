@@ -12,24 +12,20 @@ public class ChatManager : MonoBehaviourPunCallbacks
     public GameObject titleSendBtn;
     public TextMeshProUGUI chatLog;
     public TextMeshProUGUI chattingList;
-    public TextMeshProUGUI filterWord;
     public TextMeshProUGUI title;
     public GameObject titleInput;
     public TMP_InputField input;
     public ScrollRect scroll_rect;
-    public GameObject winnerBtn;
-    public GameObject winnerPan;
 
     TMP_InputField titleInput_;
 
     string chatters;
     string color;
     string inMsg;
-    string[] wordList;
+    string[] wordList = { "시발", "새끼", "마약", "병신", "애미","느금", "애비", "영자", "짱깨", "ㅗ","ㅅㅂ","씨발","지랄","놈","개새"};
 
     void Start()
     {
-        wordList = filterWord.text.Split(", ");
         PhotonNetwork.IsMessageQueueRunning = true;
         //scroll_rect = GameObject.FindObjectOfType();
         if (!PlayerPrefs.HasKey("Mycolor"))
@@ -37,8 +33,6 @@ public class ChatManager : MonoBehaviourPunCallbacks
         else
             color = PlayerPrefs.GetString("Mycolor");
         titleInput_ = titleInput.GetComponent<TMP_InputField>();
-
-        MasterCheck();
 
     }
 
@@ -48,7 +42,7 @@ public class ChatManager : MonoBehaviourPunCallbacks
         string msg = "";
         inMsg = input.text;
         MsgDetect();
-        if (PhotonNetwork.IsMasterClient)  //방장이라면
+        if (ServerManager.instance.CheckMaster())  //방장이라면
         {
             msg = string.Format("<color=#{0}>[☆{1}]</color> {2}", color, PhotonNetwork.LocalPlayer.NickName, inMsg);
         }
@@ -106,8 +100,6 @@ public class ChatManager : MonoBehaviourPunCallbacks
         //base.OnPlayerEnteredRoom(newPlayer);
         string msg = string.Format("<color=#00ff00>[{0}]님이 입장하셨습니다.</color>", newPlayer.NickName);
         ReceiveMsg(msg);
-
-        MasterCheck();
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
@@ -115,37 +107,8 @@ public class ChatManager : MonoBehaviourPunCallbacks
         //base.OnPlayerLeftRoom(otherPlayer);
         string msg = string.Format("<color=#ff0000>[{0}]님이 퇴장하셨습니다.</color>", otherPlayer.NickName);
         ReceiveMsg(msg);
-
-        MasterCheck();
     }
     
-    void MasterCheck()
-    {
-        /*
-        if (PhotonNetwork.IsMasterClient) //방장이라면 타이틀 입력칸, 토론 승패 뜸
-        {
-            //WinUpdate("방장", "00FF00");
-            MasterUpdate();
-            titleInput.SetActive(true);
-            titleSendBtn.SetActive(true);
-            winnerBtn.SetActive(true);
-            winnerPan.SetActive(true);
-        }
-        else
-        {
-            titleInput.SetActive(false);
-            titleSendBtn.SetActive(false);
-            winnerBtn.SetActive(false);
-            winnerPan.SetActive(false);
-        }
-        */
-    }
-
-    public void GoOut()
-    {
-        PhotonNetwork.LeaveRoom();
-        PhotonNetwork.LoadLevel("Lobby_A");
-    }
 
     void MsgDetect()   //비속어 필터
     {
@@ -187,40 +150,22 @@ public class ChatManager : MonoBehaviourPunCallbacks
 
     public void WinnerBlue()
     {
-        WinUpdate("찬성", "0000FF");
+        WinUpdate("찬성팀의 승리입니다!\n반대팀도 수고하셨습니다.", "85E8FF");
     }
 
     public void WinnerRed()
     {
-        WinUpdate("반대", "FF0000");
+        WinUpdate("반대팀의 승리입니다!\n반대팀도 수고하셨습니다.", "FF2F43");
     }
 
     public void WinnerNone()
     {
-        string n = string.Format("무승부 입니다~!");
-        string msg = string.Format("<color=#{0}>[☆{1}] {2}</color>", "FFFFFF", PhotonNetwork.LocalPlayer.NickName, n);
-        photonView.RPC("ReceiveMsg", RpcTarget.OthersBuffered, msg);
-        ReceiveMsg(msg);
-        input.ActivateInputField(); // 반대는 input.select(); (반대로 토글)
-        input.text = "";
+        WinUpdate("치열한 토론끝에 무승부로 끝이 났습니다!", "FFFFFF");
     }
 
-    
-
-    void WinUpdate(string winner, string color)
+    void WinUpdate(string winner, string color)  //이름은 이렇지만 택스트 자동출력
     {
-        string n = string.Format("승리한 팀은 {0}팀 입니다~!",winner);
-        string msg = string.Format("<color=#{0}>[☆{1}] {2}</color>", color, PhotonNetwork.LocalPlayer.NickName, n);
-        photonView.RPC("ReceiveMsg", RpcTarget.OthersBuffered, msg);
-        ReceiveMsg(msg);
-        input.ActivateInputField(); // 반대는 input.select(); (반대로 토글)
-        input.text = "";
-    }
-
-    void MasterUpdate()
-    {
-        string n = string.Format("방장은 {0}님 입니다~!", PhotonNetwork.LocalPlayer.NickName);
-        string msg = string.Format("<color=#FF00FF>{0}</color>",  n);
+        string msg = string.Format("<color=#{0}>[☆{1}] {2}</color>", color, PhotonNetwork.LocalPlayer.NickName, winner);
         photonView.RPC("ReceiveMsg", RpcTarget.OthersBuffered, msg);
         ReceiveMsg(msg);
         input.ActivateInputField(); // 반대는 input.select(); (반대로 토글)
@@ -237,7 +182,6 @@ public class ChatManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void TitleUpdate(string txt)
     {
-        //Debug.Log(txt);
         title.text = txt;
     }
 }

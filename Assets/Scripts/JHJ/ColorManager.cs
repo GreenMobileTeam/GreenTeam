@@ -14,7 +14,8 @@ public class ColorManager : MonoBehaviour
     public void RedSelect()
     {
         //gm.myColor = "FF0000";
-        PlayerPrefs.SetString("Mycolor", "FF0000");
+        PlayerPrefs.SetString("Mycolor", "FF2F43");
+        GameManager.instance.myColor = "FF2F43";
     }
 
     public void YellowSelect()
@@ -38,7 +39,8 @@ public class ColorManager : MonoBehaviour
     public void BlueSelect()
     {
         //gm.myColor = "00FF00";
-        PlayerPrefs.SetString("Mycolor", "0000FF");
+        PlayerPrefs.SetString("Mycolor", "85E8FF");
+        GameManager.instance.myColor = "85E8FF";
     }
 
     public void MagentaSelect()
