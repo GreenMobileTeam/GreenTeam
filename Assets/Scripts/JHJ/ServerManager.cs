@@ -168,7 +168,8 @@ public class ServerManager : MonoBehaviourPunCallbacks
         string nowC = CharacterManager.instance.currentCharacter.ToString();
         GameObject pl = Resources.Load(nowC.ToString()) as GameObject;
         Renderer plR = pl.GetComponentInChildren<Renderer>();
-
+        TextMeshProUGUI nameT = pl.GetComponentInChildren<TextMeshProUGUI>();
+        nameT.text = myName_;
         plR.material = Resources.Load(GameManager.instance.myGhostColor.ToString()) as Material;
         GameObject trans = GameObject.Find("SpawnPoint");
         myGhost = PhotonNetwork.Instantiate(nowC, trans.GetComponent<Transform>().position, Quaternion.identity);
