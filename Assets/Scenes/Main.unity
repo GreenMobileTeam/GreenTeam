@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.08724164, g: 0.17926246, b: 0.4121681, a: 1}
+  m_IndirectSpecularColor: {r: 0.0862379, g: 0.17858869, b: 0.41237283, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7169,6 +7169,7 @@ GameObject:
   - component: {fileID: 925030087}
   - component: {fileID: 925030086}
   - component: {fileID: 925030085}
+  - component: {fileID: 925030088}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -7302,6 +7303,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 925030083}
   m_CullTransparentMesh: 1
+--- !u!114 &925030088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925030083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ede5164bd0d11b341b4d79ed6d2e6dfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickSound: {fileID: 8300000, guid: f8517d7adbc0c974b9eb7dfacc862ddc, type: 3}
 --- !u!1 &936993856
 GameObject:
   m_ObjectHideFlags: 0
