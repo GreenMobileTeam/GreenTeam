@@ -9,7 +9,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     [SerializeField] private RectTransform rect_Joystick;
     [SerializeField] private float moveSpeed;
 
-    private PhotonManager photonManager;
+    private ServerManager serverManager;
     // private RespawnGhost respawnGhost; // 생성된 고스트 불러옴
     private float joystick_Radius; // rect_JoystickBG의 반지름
     private bool isTouch = false;
@@ -19,9 +19,9 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     void Start()
     {
         joystick_Radius = rect_JoystickBG.rect.width * 0.5f;
-        if (photonManager == null)
+        if (serverManager == null)
         {
-            photonManager = FindObjectOfType<PhotonManager>();
+            serverManager = FindObjectOfType<ServerManager>();
         }
     }
 
@@ -31,9 +31,9 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
         {
             if (!isBorder)
             {
-                photonManager.playerGhost.transform.position += mVector;
+                serverManager.myGhost.transform.position += mVector;
             }
-            photonManager.playerGhost.transform.LookAt(photonManager.playerGhost.transform.position + mVector);
+            serverManager.myGhost.transform.LookAt(serverManager.myGhost.transform.position + mVector);
         }
     }
 
@@ -76,6 +76,6 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     void StopToWall()
     {
         // Debug.DrawRay(photonManager.playerGhost.transform.position, photonManager.playerGhost.transform.forward * 2, Color.green);
-        isBorder = Physics.Raycast(photonManager.playerGhost.transform.position, photonManager.playerGhost.transform.forward, 2, LayerMask.GetMask("Wall"));
+        isBorder = Physics.Raycast(serverManager.myGhost.transform.position, serverManager.myGhost.transform.forward, 2, LayerMask.GetMask("Wall"));
     }
 }

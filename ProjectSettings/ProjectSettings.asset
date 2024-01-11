@@ -159,7 +159,7 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
     Android: com.DancingDragon.Gogora
-    Standalone: com.DancingDragon.GhostChat
+    Standalone: com.DancingDragon.Gogora
   buildNumber:
     Standalone: 0
     VisionOS: 0
