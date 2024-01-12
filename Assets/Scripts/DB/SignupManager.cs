@@ -20,6 +20,8 @@ public class SignupManager : MonoBehaviour
 
     public GameObject Checkpopup;
     public TMP_Text checkText;
+    public GameObject signPen;
+    public GameObject loginPen;
 
     string serverURL = "http://greenacademi.store";
 
@@ -132,7 +134,7 @@ public class SignupManager : MonoBehaviour
                         userCheck = isDuplicate;
                     }
                     else
-                    {
+                    { 
                         userCheck = isDuplicate;
                     }
                 }
@@ -159,12 +161,14 @@ public class SignupManager : MonoBehaviour
 
     public void CheckUserNameButton()
     {
-        StartCoroutine(CheckDuplicate("username", usernameInput));
+        if(usernameInput.text != "")
+            StartCoroutine(CheckDuplicate("username", usernameInput));
     }
 
     public void CheckNickNameButton()
     {
-        StartCoroutine(CheckDuplicate("nickname", nicknameInput));
+        if(nicknameInput.text != "")
+            StartCoroutine(CheckDuplicate("nickname", nicknameInput));
     }
 
     IEnumerator CheckCensorship(string type, TMP_InputField value)
@@ -218,8 +222,12 @@ public class SignupManager : MonoBehaviour
             {
                 if (request.result == UnityWebRequest.Result.Success)
                 {
+                    ServerManager.instance.SendPop("회원가입 성공",1f);
                     Debug.Log("회원가입 성공");
-                    ReturnLoginScene();
+                    ResetField();
+                    signPen.SetActive(false);
+                    loginPen.SetActive(true);
+                    //ReturnLoginScene();
                 }
                 else
                 {
@@ -260,6 +268,14 @@ public class SignupManager : MonoBehaviour
     public void PopUpClose()
     {
         Checkpopup.SetActive(false);
+    }
+
+    public void ResetField()
+    {
+        usernameInput.text = "";
+        passwordInput.text = "";
+        passwordCheckInput.text = "";
+        nicknameInput.text = "";
     }
 
 }

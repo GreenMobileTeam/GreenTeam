@@ -2,11 +2,12 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using TMPro;
 using System.Collections;
+using UnityEngine.UI;
 
 public class MainController : MonoBehaviour
 {
     public TextMeshProUGUI text;
-    bool next = false;
+    
 
     private void Awake()
     {
@@ -35,9 +36,5 @@ public class MainController : MonoBehaviour
         StartCoroutine(FadeTextToFullAlpha());
     }
 
-    public void Touched()
-    {
-        next = true;
-        SceneManager.LoadScene("login");
-    }
+
 }

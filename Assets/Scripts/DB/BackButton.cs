@@ -21,26 +21,13 @@ public class BackButton : MonoBehaviour
         }
     }
 
-
-    public static BackButton Instance
-    {
-        get
-        {
-            if (null == instance)
-            {
-                return null;
-            }
-            return instance;
-        }
-    }
-
     // Update is called once per frame
     void Update()
     {
 #if UNITY_ANDROID
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if(SceneManager.GetActiveScene().buildIndex ==0 || SceneManager.GetActiveScene().buildIndex ==1)
+            if(SceneManager.GetActiveScene().buildIndex ==0)
             {
                 ClickCount++;
                     if (!IsInvoking("DoubleClick")) 
@@ -51,22 +38,18 @@ public class BackButton : MonoBehaviour
                         Application.Quit();
                     }
             }
-            else if(SceneManager.GetActiveScene().buildIndex == 2)
+            else if(SceneManager.GetActiveScene().buildIndex == 1)
             {
-               SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
-            }
-            else if(SceneManager.GetActiveScene().buildIndex == 3)
-            {
-                if (PlayerPrefs.GetInt("IsGuest") == 0)
+                if(GameManager.instance.isGuest)
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+                else
                 {
-                     LogOutManager.Instance.LogOut();
+                    LogOutManager.Instance.LogOut();
                 }
-
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 2);
             }
             else
             {
-                SceneManager.LoadScene("Lobby_A");
+                SceneManager.LoadScene("Lobby");
             }
         }
 #endif

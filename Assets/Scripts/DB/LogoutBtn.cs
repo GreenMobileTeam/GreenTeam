@@ -11,15 +11,15 @@ public class LogoutBtn : MonoBehaviour
     // Start is called before the first frame update
     public void LogOut()
     {
-        Debug.Log(PlayerPrefs.GetInt("IsGuest"));
+        ServerManager.instance.OnDisconnect();
 
-        if (PlayerPrefs.GetInt("IsGuest") == 0)
+        if (!GameManager.instance.isGuest)
         {
             StartCoroutine(SendLogoutRequest());
         }
-        else if (PlayerPrefs.GetInt("IsGuest") == 1)
+        else
         {
-            SceneManager.LoadScene("login");
+            SceneManager.LoadScene("Main");
         }
     }
 
@@ -29,8 +29,7 @@ public class LogoutBtn : MonoBehaviour
 
         WWWForm form = new WWWForm();
 
-        username = PlayerPrefs.GetString("Username");
-        Debug.LogWarning(username);
+        username = GameManager.instance.myID;
         form.AddField("username", username);
 
         using (UnityWebRequest www = UnityWebRequest.Post(url, form))
@@ -41,6 +40,8 @@ public class LogoutBtn : MonoBehaviour
             if (www.result == UnityWebRequest.Result.Success)
             {
                 Debug.Log("로그아웃 성공");
+
+                SceneManager.LoadScene("Main");
             }
             else
             {

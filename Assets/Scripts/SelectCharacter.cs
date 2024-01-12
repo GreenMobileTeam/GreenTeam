@@ -125,6 +125,7 @@ public class SelectCharacter : MonoBehaviour
     public void ChangeColorWhite()
     {
         PlayerPrefs.SetInt("gColor", 0);
+        GameManager.instance.myGhostColor = "White";
         ChangeColor(ghostA, prefabGhostA, whiteMaterial);
         ChangeColor(ghostB, prefabGhostB, whiteMaterial);
         ChangeColor(ghostC, prefabGhostC, whiteMaterial);
@@ -132,6 +133,8 @@ public class SelectCharacter : MonoBehaviour
     public void ChangeColorBlack()
     {
         PlayerPrefs.SetInt("gColor", 1);
+        GameManager.instance.myGhostColor = "Black";
+
         ChangeColor(ghostA, prefabGhostA, blackMaterial);
         ChangeColor(ghostB, prefabGhostB, blackMaterial);
         ChangeColor(ghostC, prefabGhostC, blackMaterial);
@@ -139,6 +142,8 @@ public class SelectCharacter : MonoBehaviour
     public void ChangeColorBlue()
     {
         PlayerPrefs.SetInt("gColor", 2);
+        GameManager.instance.myGhostColor = "Blue";
+
         ChangeColor(ghostA, prefabGhostA, blueMaterial);
         ChangeColor(ghostB, prefabGhostB, blueMaterial);
         ChangeColor(ghostC, prefabGhostC, blueMaterial);
@@ -146,6 +151,8 @@ public class SelectCharacter : MonoBehaviour
     public void ChangeColorRed()
     {
         PlayerPrefs.SetInt("gColor", 3);
+        GameManager.instance.myGhostColor = "Red";
+
         ChangeColor(ghostA, prefabGhostA, redMaterial);
         ChangeColor(ghostB, prefabGhostB, redMaterial);
         ChangeColor(ghostC, prefabGhostC, redMaterial);
@@ -153,6 +160,8 @@ public class SelectCharacter : MonoBehaviour
     public void ChangeColorGreen()
     {
         PlayerPrefs.SetInt("gColor", 4);
+        GameManager.instance.myGhostColor = "Green";
+
         ChangeColor(ghostA, prefabGhostA, greenMaterial);
         ChangeColor(ghostB, prefabGhostB, greenMaterial);
         ChangeColor(ghostC, prefabGhostC, greenMaterial);
@@ -160,13 +169,15 @@ public class SelectCharacter : MonoBehaviour
     public void ChangeColorYellow()
     {
         PlayerPrefs.SetInt("gColor", 5);
+        GameManager.instance.myGhostColor = "Yellow";
+
         ChangeColor(ghostA, prefabGhostA, yellowMaterial);
         ChangeColor(ghostB, prefabGhostB, yellowMaterial);
         ChangeColor(ghostC, prefabGhostC, yellowMaterial);
     }
 
     public void ChangeColor(GameObject player ,GameObject prefabPlayer, Material material) {
-        Debug.Log("Color Changed");
+        //Debug.Log("Color Changed");
         Renderer playerRenderer = player.GetComponentInChildren<Renderer>();
         Renderer prefabPlayerRenderer = prefabPlayer.GetComponentInChildren<Renderer>();
 
