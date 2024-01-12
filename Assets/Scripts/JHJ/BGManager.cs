@@ -7,15 +7,24 @@ public class BGManager : MonoBehaviour
 {
     Scene scene;
 
-    private void Awake()
+    private static BGManager instance = null;
+    void Awake()
     {
-        DontDestroyOnLoad(this.gameObject);
+        if (null == instance)
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     private void Update()
     {
         scene = SceneManager.GetActiveScene();
-        if(scene.name == "Lobby_A")
+        if(scene.name == "Lobby")
         {
             Destroy(this.gameObject);
         }

@@ -161,12 +161,14 @@ public class SignupManager : MonoBehaviour
 
     public void CheckUserNameButton()
     {
-        StartCoroutine(CheckDuplicate("username", usernameInput));
+        if(usernameInput.text != "")
+            StartCoroutine(CheckDuplicate("username", usernameInput));
     }
 
     public void CheckNickNameButton()
     {
-        StartCoroutine(CheckDuplicate("nickname", nicknameInput));
+        if(nicknameInput.text != "")
+            StartCoroutine(CheckDuplicate("nickname", nicknameInput));
     }
 
     IEnumerator CheckCensorship(string type, TMP_InputField value)
@@ -222,6 +224,7 @@ public class SignupManager : MonoBehaviour
                 {
                     ServerManager.instance.SendPop("회원가입 성공",1f);
                     Debug.Log("회원가입 성공");
+                    ResetField();
                     signPen.SetActive(false);
                     loginPen.SetActive(true);
                     //ReturnLoginScene();
@@ -265,6 +268,14 @@ public class SignupManager : MonoBehaviour
     public void PopUpClose()
     {
         Checkpopup.SetActive(false);
+    }
+
+    public void ResetField()
+    {
+        usernameInput.text = "";
+        passwordInput.text = "";
+        passwordCheckInput.text = "";
+        nicknameInput.text = "";
     }
 
 }

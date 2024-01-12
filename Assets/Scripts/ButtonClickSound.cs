@@ -5,27 +5,44 @@ using UnityEngine.UI;
 
 public class ButtonClickSound : MonoBehaviour
 {
-    public AudioClip clickSound;  // 소리 파일을 저장할 변수
-    private AudioSource audioSource;  // AudioSource 컴포넌트를 저장할 변수
-
-    void Start()
+    private static ButtonClickSound instance = null;
+    void Awake()
     {
-        // AudioSource 컴포넌트를 현재 게임 오브젝트에 추가
-        audioSource = gameObject.AddComponent<AudioSource>();
-        // 클릭 사운드를 설정
-        audioSource.clip = clickSound;
-
-        // Button에 클릭 이벤트를 추가
-        Button btn = GetComponent<Button>();
-        if (btn != null)
+        if (null == instance)
         {
-            btn.onClick.AddListener(PlayClickSound);
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
         }
     }
 
-    void PlayClickSound()
+    public static ButtonClickSound Instance
     {
-        // 클릭 사운드를 재생
+        get
+        {
+            if (null == instance)
+            {
+                return null;
+            }
+            return instance;
+        }
+    }
+
+    public AudioClip clickSound;
+    private AudioSource audioSource;
+
+
+    void Start()
+    {
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.clip = clickSound;
+    }
+
+    public void PlayClickSound()
+    {
         audioSource.Play();
     }
 }

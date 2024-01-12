@@ -23,10 +23,6 @@ public class LoginManager : MonoBehaviour
     private void Awake()
     {
         nullCheck = false;
-
-        PlayerPrefs.SetString("Nickname", "");
-        PlayerPrefs.SetString("Username", "");
-        PlayerPrefs.SetInt("IsGuest", 1);
     }
 
     private void Update()
@@ -81,7 +77,6 @@ public class LoginManager : MonoBehaviour
                     if (response.message == "success")
                     {
                         OnLoginSuccess(username);
-                        PlayerPrefs.SetInt("IsGuest", 0);
                     }
                     else if (response.message == "username" || response.message == "password")
                     {
@@ -114,8 +109,6 @@ public class LoginManager : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("username", username);
 
-        PlayerPrefs.SetString("Username", username);
-
         using (UnityWebRequest request = UnityWebRequest.Post(url, form))
         {
             yield return request.SendWebRequest();
@@ -137,6 +130,7 @@ public class LoginManager : MonoBehaviour
                     string[] temp = nickname.Split(":");
                     string n = temp[1].Substring(1, temp[1].Length - 3);
                     GameManager.instance.myName = n;
+                    GameManager.instance.myID = username;
                     GameManager.instance.isGuest = false;
                     Debug.Log("현재 닉네임: " + n);
                     Loading.SetActive(true);
@@ -170,18 +164,12 @@ public class LoginManager : MonoBehaviour
         DuplicatePopup.SetActive(false);
     }
 
-    public void GuestLogin()
-    {
-        SceneManager.LoadScene("Lobby_A");
-        PlayerPrefs.SetInt("IsGuest", 1);
-    }
 
     public void AttemptLogout()
     {
-        PlayerPrefs.SetString("Username", usernameInput.text);
+        GameManager.instance.myID = usernameInput.text;
         LogOutManager.Instance.LogOut();
         PopUpClose();
-        LogIn();
     }
 
     public void GameExit()
