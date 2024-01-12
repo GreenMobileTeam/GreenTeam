@@ -183,4 +183,9 @@ public class LoginManager : MonoBehaviour
         PopUpClose();
         LogIn();
     }
+
+    public void GameExit()
+    {
+        Application.Quit();
+    }
 }

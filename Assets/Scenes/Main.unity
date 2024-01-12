@@ -1366,6 +1366,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 37.035675
       objectReference: {fileID: 0}
+    - target: {fileID: 708631061278600929, guid: f95f7895191d99f408d7768284de5430, type: 3}
+      propertyPath: signPen
+      value: 
+      objectReference: {fileID: 763712161}
+    - target: {fileID: 708631061278600929, guid: f95f7895191d99f408d7768284de5430, type: 3}
+      propertyPath: loginPen
+      value: 
+      objectReference: {fileID: 775107677}
     - target: {fileID: 1361547344756605556, guid: f95f7895191d99f408d7768284de5430, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 2
@@ -7169,7 +7177,6 @@ GameObject:
   - component: {fileID: 925030087}
   - component: {fileID: 925030086}
   - component: {fileID: 925030085}
-  - component: {fileID: 925030088}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -7303,19 +7310,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 925030083}
   m_CullTransparentMesh: 1
---- !u!114 &925030088
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 925030083}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ede5164bd0d11b341b4d79ed6d2e6dfb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clickSound: {fileID: 8300000, guid: f8517d7adbc0c974b9eb7dfacc862ddc, type: 3}
 --- !u!1 &936993856
 GameObject:
   m_ObjectHideFlags: 0
@@ -18857,7 +18851,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2090252080}
         m_TargetAssemblyTypeName: LoginManager, Assembly-CSharp
-        m_MethodName: PopUpClose
+        m_MethodName: GameExit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

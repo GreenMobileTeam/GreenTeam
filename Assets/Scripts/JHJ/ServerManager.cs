@@ -102,6 +102,11 @@ public class ServerManager : MonoBehaviourPunCallbacks
         StartCoroutine(Notice("Á¢¼ÓÀÌ ²÷°å½À´Ï´Ù", 1.2f));
     }
 
+    public void SendPop(string t, float tim)
+    {
+        StartCoroutine(Notice(t,tim));
+    }
+
     IEnumerator Notice(string text, float time)
     {
         //Debug.Log("start");
