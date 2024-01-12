@@ -12,7 +12,6 @@ public class LoginBtn : MonoBehaviour
     public void GuestLogin()
     {
         SceneManager.LoadScene("Lobby_A");
-        PlayerPrefs.SetInt("IsGuest", 1);
     }
 
     public void ExitBtn()
