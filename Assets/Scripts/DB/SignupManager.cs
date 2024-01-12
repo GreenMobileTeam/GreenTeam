@@ -20,6 +20,8 @@ public class SignupManager : MonoBehaviour
 
     public GameObject Checkpopup;
     public TMP_Text checkText;
+    public GameObject signPen;
+    public GameObject loginPen;
 
     string serverURL = "http://greenacademi.store";
 
@@ -218,8 +220,11 @@ public class SignupManager : MonoBehaviour
             {
                 if (request.result == UnityWebRequest.Result.Success)
                 {
+                    ServerManager.instance.SendPop("회원가입 성공",1f);
                     Debug.Log("회원가입 성공");
-                    ReturnLoginScene();
+                    signPen.SetActive(false);
+                    loginPen.SetActive(true);
+                    //ReturnLoginScene();
                 }
                 else
                 {
