@@ -1249,13 +1249,10 @@ MonoBehaviour:
   titleSendBtn: {fileID: 7806345435528145624}
   chatLog: {fileID: 1126956095725923017}
   chattingList: {fileID: 4900831334651691946}
-  filterWord: {fileID: 5017250191660457}
   title: {fileID: 7451426678179422052}
   titleInput: {fileID: 8066319194896625183}
   input: {fileID: 784662589552635175}
   scroll_rect: {fileID: 5163100815508874296}
-  winnerBtn: {fileID: 1738918881969499600}
-  winnerPan: {fileID: 5193019127538395162}
 --- !u!114 &7343860535742807234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3834,10 +3831,10 @@ RectTransform:
   - {fileID: 9170690363805576587}
   m_Father: {fileID: 3567966485969289745}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 68.02905, y: 230.79498}
-  m_SizeDelta: {x: 292.8095, y: 227.2243}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -891.97095, y: -309.20502}
+  m_SizeDelta: {x: 292.80957, y: 227.2243}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4164239719003300807
 MonoBehaviour:
@@ -3900,8 +3897,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 40, y: -80}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 1675, y: -30}
+  m_SizeDelta: {x: 3350, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2836895451084632975
 CanvasRenderer:
@@ -3966,7 +3963,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -3994,7 +3991,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -231.57727, w: -43.184998}
+  m_margin: {x: 0, y: 0, z: 2736.9675, w: -109.06891}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -4049,7 +4046,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 22.813, y: 0.000071525574}
+  m_AnchoredPosition: {x: 22.813, y: 0.00004386902}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &4495559014829235108
@@ -4079,17 +4076,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 40
-    m_Right: 40
-    m_Top: 80
-    m_Bottom: 50
+    m_Left: 0
+    m_Right: 50
+    m_Top: 30
+    m_Bottom: 0
   m_ChildAlignment: 0
   m_Spacing: 0
-  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 1
+  m_ChildControlWidth: 0
   m_ChildControlHeight: 1
-  m_ChildScaleWidth: 0
+  m_ChildScaleWidth: 1
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
 --- !u!1 &4005960803061902138
@@ -8074,7 +8071,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5420421095875842861}
         m_TargetAssemblyTypeName: RoomBtnManager, Assembly-CSharp
-        m_MethodName: YesClick
+        m_MethodName: NoClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

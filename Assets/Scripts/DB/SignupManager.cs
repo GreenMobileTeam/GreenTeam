@@ -19,6 +19,8 @@ public class SignupManager : MonoBehaviour
     public Button signupButn;
 
     public GameObject Checkpopup;
+    public GameObject loginPop;
+    public GameObject signPop;
     public TMP_Text checkText;
 
     string serverURL = "http://greenacademi.store";
@@ -237,7 +239,10 @@ public class SignupManager : MonoBehaviour
 
     public void ReturnLoginScene()
     {
-        SceneManager.LoadScene("login");
+        signPop.SetActive(false);
+        loginPop.SetActive(true);
+
+        //SceneManager.LoadScene("login");
     }
 
     public void OnUsernameValueChanged()

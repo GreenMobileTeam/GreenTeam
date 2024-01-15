@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class BGManager : MonoBehaviour
 {
     Scene scene;
+    bool flag = true;
 
     private void Awake()
     {
@@ -15,9 +16,15 @@ public class BGManager : MonoBehaviour
     private void Update()
     {
         scene = SceneManager.GetActiveScene();
-        if(scene.name == "Lobby_A")
+        if(scene.name == "Lobby")
         {
-            Destroy(this.gameObject);
+            this.gameObject.GetComponent<AudioSource>().Stop();
+            flag = false;
+        }
+        if(scene.name == "Main" && flag == false)
+        {
+            this.gameObject.GetComponent<AudioSource>().Play();
+            flag = true;
         }
     }
 }

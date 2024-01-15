@@ -8,11 +8,12 @@ public class SelectCharacter : MonoBehaviour
 {
     public Character character;
 
-    [SerializeField] private GameObject ghostA;
-    [SerializeField] private GameObject ghostB;
-    [SerializeField] private GameObject ghostC;
+    public GameObject[] ghostA;
+    public GameObject[] ghostB;
+    public GameObject[] ghostC;
 
-    [SerializeField] private GameObject prefabGhostA;
+    /*
+    [SerializeField] private GameObject prefabGhostA;  //흰, 검, 파, 빨, 초, 노
     [SerializeField] private GameObject prefabGhostB;
     [SerializeField] private GameObject prefabGhostC;
 
@@ -22,6 +23,7 @@ public class SelectCharacter : MonoBehaviour
     [SerializeField] private Material redMaterial;
     [SerializeField] private Material greenMaterial;
     [SerializeField] private Material yellowMaterial;
+    */
 
     [SerializeField] private float turnAngle = 30f; // 회전값
 
@@ -29,13 +31,25 @@ public class SelectCharacter : MonoBehaviour
     private Quaternion initialRotationB;
     private Quaternion initialRotationC;
 
+    int nowColor = 0;
+    string nowG;
+
     private void Start() // 초기 각도 저장
     {
-        initialRotationA = ghostA.transform.rotation;
-        initialRotationB = ghostB.transform.rotation;
-        initialRotationC = ghostC.transform.rotation;
-        if(!PlayerPrefs.HasKey("gColor"))
-            ChangeColorWhite();
+        nowColor = nowColor = PlayerPrefs.GetInt("gColor");
+
+        for (int i = 0; i < ghostA.Length; i++)
+            initialRotationA = ghostA[i].transform.rotation;
+        for (int i = 0; i < ghostB.Length; i++)
+            initialRotationB = ghostB[i].transform.rotation;
+        for (int i = 0; i < ghostC.Length; i++)
+            initialRotationC = ghostC[i].transform.rotation;
+        if (!PlayerPrefs.HasKey("gColor"))
+        {
+            nowColor = 0;
+            nowG = "A";
+        }
+
         else
         {
             int n = PlayerPrefs.GetInt("gColor");
@@ -68,12 +82,15 @@ public class SelectCharacter : MonoBehaviour
             switch (g)
             {
                 case "A":
+                    nowG = "GhostA";
                     ShowGhostA();
                     break;
                 case "B":
+                    nowG = "GhostB";
                     ShowGhostB();
                     break;
                 case "C":
+                    nowG = "GhostC";
                     ShowGhostC();
                     break;
             }
@@ -86,28 +103,46 @@ public class SelectCharacter : MonoBehaviour
     public void ShowGhostA()
     {
         PlayerPrefs.SetString("nowGhost","A");
-        ghostA.SetActive(true);
-        ghostB.SetActive(false);
-        ghostC.SetActive(false);
-        ResetRotation(ghostA, initialRotationA);
+        nowG = "A";
+        for (int i = 0; i < ghostA.Length; i++)
+        {
+            ghostB[i].SetActive(false);
+            ghostC[i].SetActive(false);
+        }
+
+        ghostA[nowColor].SetActive(true);
+
+        ResetRotation(ghostA[nowColor], initialRotationA);
         CharacterManager.instance.currentCharacter = Character.ghostA;
     }
     public void ShowGhostB()
     {
         PlayerPrefs.SetString("nowGhost", "B");
-        ghostA.SetActive(false);
-        ghostB.SetActive(true);
-        ghostC.SetActive(false);
-        ResetRotation(ghostB, initialRotationB);
+        nowG = "B";
+        for (int i = 0; i < ghostA.Length; i++)
+        {
+            ghostA[i].SetActive(false);
+            ghostC[i].SetActive(false);
+        }
+
+        ghostB[nowColor].SetActive(true);
+
+        ResetRotation(ghostB[nowColor], initialRotationB);
         CharacterManager.instance.currentCharacter = Character.ghostB;
     }
     public void ShowGhostC()
     {
         PlayerPrefs.SetString("nowGhost", "C");
-        ghostA.SetActive(false);
-        ghostB.SetActive(false);
-        ghostC.SetActive(true);
-        ResetRotation(ghostC, initialRotationC);
+        nowG = "C";
+        for (int i = 0; i < ghostA.Length; i++)
+        {
+            ghostB[i].SetActive(false);
+            ghostA[i].SetActive(false);
+        }
+
+        ghostC[nowColor].SetActive(true);
+
+        ResetRotation(ghostC[nowColor], initialRotationC);
         CharacterManager.instance.currentCharacter = Character.ghostC;
     }
 
@@ -126,55 +161,69 @@ public class SelectCharacter : MonoBehaviour
     {
         PlayerPrefs.SetInt("gColor", 0);
         GameManager.instance.myGhostColor = "White";
-        ChangeColor(ghostA, prefabGhostA, whiteMaterial);
-        ChangeColor(ghostB, prefabGhostB, whiteMaterial);
-        ChangeColor(ghostC, prefabGhostC, whiteMaterial);
+        nowColor = 0;
+        UpdateGhost();
+
     }
     public void ChangeColorBlack()
     {
         PlayerPrefs.SetInt("gColor", 1);
         GameManager.instance.myGhostColor = "Black";
-
-        ChangeColor(ghostA, prefabGhostA, blackMaterial);
-        ChangeColor(ghostB, prefabGhostB, blackMaterial);
-        ChangeColor(ghostC, prefabGhostC, blackMaterial);
+        nowColor = 1;
+        UpdateGhost();
     }
     public void ChangeColorBlue()
     {
         PlayerPrefs.SetInt("gColor", 2);
         GameManager.instance.myGhostColor = "Blue";
-
-        ChangeColor(ghostA, prefabGhostA, blueMaterial);
-        ChangeColor(ghostB, prefabGhostB, blueMaterial);
-        ChangeColor(ghostC, prefabGhostC, blueMaterial);
+        nowColor = 2;
+        UpdateGhost();
     }
     public void ChangeColorRed()
     {
         PlayerPrefs.SetInt("gColor", 3);
         GameManager.instance.myGhostColor = "Red";
-
-        ChangeColor(ghostA, prefabGhostA, redMaterial);
-        ChangeColor(ghostB, prefabGhostB, redMaterial);
-        ChangeColor(ghostC, prefabGhostC, redMaterial);
+        nowColor = 3;
+        UpdateGhost();
     }
     public void ChangeColorGreen()
     {
         PlayerPrefs.SetInt("gColor", 4);
         GameManager.instance.myGhostColor = "Green";
-
-        ChangeColor(ghostA, prefabGhostA, greenMaterial);
-        ChangeColor(ghostB, prefabGhostB, greenMaterial);
-        ChangeColor(ghostC, prefabGhostC, greenMaterial);
+        nowColor = 4;
+        UpdateGhost();
     }
     public void ChangeColorYellow()
     {
         PlayerPrefs.SetInt("gColor", 5);
         GameManager.instance.myGhostColor = "Yellow";
-
-        ChangeColor(ghostA, prefabGhostA, yellowMaterial);
-        ChangeColor(ghostB, prefabGhostB, yellowMaterial);
-        ChangeColor(ghostC, prefabGhostC, yellowMaterial);
+        nowColor = 5;
+        UpdateGhost();
     }
+
+    private void UpdateGhost()
+    {
+        for (int i = 0; i < ghostA.Length; i++)
+        {
+            ghostA[i].SetActive(false);
+            ghostB[i].SetActive(false);
+            ghostC[i].SetActive(false);
+        }
+
+        if (nowG == "A")
+        {
+            ghostA[nowColor].SetActive(true);
+        }
+        if(nowG == "B")
+        {
+            ghostB[nowColor].SetActive(true);
+        }
+        if(nowG == "C")
+        {
+            ghostC[nowColor].SetActive(true);
+        }
+    }
+
 
     public void ChangeColor(GameObject player ,GameObject prefabPlayer, Material material) {
         //Debug.Log("Color Changed");
@@ -193,17 +242,17 @@ public class SelectCharacter : MonoBehaviour
 
     private void RotateCharacter(float angle)
     {
-        if (ghostA.activeSelf)
+        if (ghostA[nowColor].activeSelf)
         {
-            ghostA.transform.Rotate(Vector3.up, angle);
+            ghostA[nowColor].transform.Rotate(Vector3.up, angle);
         }
-        else if (ghostB.activeSelf)
+        else if (ghostB[nowColor].activeSelf)
         {
-            ghostB.transform.Rotate(Vector3.up, angle);
+            ghostB[nowColor].transform.Rotate(Vector3.up, angle);
         }
-        else if (ghostC.activeSelf)
+        else if (ghostC[nowColor].activeSelf)
         {
-            ghostC.transform.Rotate(Vector3.up, angle);
+            ghostC[nowColor].transform.Rotate(Vector3.up, angle);
         }
     }
 
