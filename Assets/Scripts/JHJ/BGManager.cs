@@ -6,19 +6,11 @@ using UnityEngine.SceneManagement;
 public class BGManager : MonoBehaviour
 {
     Scene scene;
+    bool flag = true;
 
-    private static BGManager instance = null;
-    void Awake()
+    private void Awake()
     {
-        if (null == instance)
-        {
-            instance = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
+        DontDestroyOnLoad(this.gameObject);
     }
 
     private void Update()
@@ -26,7 +18,13 @@ public class BGManager : MonoBehaviour
         scene = SceneManager.GetActiveScene();
         if(scene.name == "Lobby")
         {
-            Destroy(this.gameObject);
+            this.gameObject.GetComponent<AudioSource>().Stop();
+            flag = false;
+        }
+        if(scene.name == "Main" && flag == false)
+        {
+            this.gameObject.GetComponent<AudioSource>().Play();
+            flag = true;
         }
     }
 }

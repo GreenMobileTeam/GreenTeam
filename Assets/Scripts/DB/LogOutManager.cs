@@ -53,7 +53,7 @@ public class LogOutManager : MonoBehaviour
 
         WWWForm form = new WWWForm();
 
-        username = GameManager.instance.myID;
+        username = PlayerPrefs.GetString("Username");
         form.AddField("username", username);
 
         using (UnityWebRequest www = UnityWebRequest.Post(url, form))
@@ -77,7 +77,7 @@ public class LogOutManager : MonoBehaviour
 
         WWWForm form = new WWWForm();
 
-        username = GameManager.instance.myID;
+        username = PlayerPrefs.GetString("Username");
         form.AddField("username", username);
 
         using (UnityWebRequest www = UnityWebRequest.Post(url, form))
@@ -87,7 +87,7 @@ public class LogOutManager : MonoBehaviour
             if (www.result == UnityWebRequest.Result.Success)
             {
                 Debug.Log("로그아웃 성공");
-                SceneManager.LoadScene("Main");
+                SceneManager.LoadScene("login");
             }
             else
             {
@@ -98,7 +98,7 @@ public class LogOutManager : MonoBehaviour
 
     public void OnApplicationQuit()
     {
-        if (!GameManager.instance.isGuest)
+        if (PlayerPrefs.GetInt("IsGuest") == 0)
             LogOutTemp();
     }
 
@@ -106,7 +106,7 @@ public class LogOutManager : MonoBehaviour
     {
         if (pauseStatus)
         {
-            if (!GameManager.instance.isGuest)
+            if (PlayerPrefs.GetInt("IsGuest") == 0)
                 LogOutTemp();
         }
         else

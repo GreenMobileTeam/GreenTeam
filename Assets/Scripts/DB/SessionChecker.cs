@@ -23,14 +23,6 @@ public class SessionChecker : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if(SceneManager.GetActiveScene().name == "Main")
-        {
-            Destroy(this.gameObject);
-        }
-    }
-
     public static SessionChecker Instance
     {
         get
@@ -52,7 +44,7 @@ public class SessionChecker : MonoBehaviour
     {
         WaitForSeconds delay = new WaitForSeconds(seconds); 
 
-        while (GameManager.instance.myID != "" && !GameManager.instance.isGuest)
+        while (PlayerPrefs.GetString("Username") != "" && PlayerPrefs.HasKey("Username"))
         {
             yield return delay;
             StartCoroutine(CheckSession());
@@ -61,9 +53,11 @@ public class SessionChecker : MonoBehaviour
 
     IEnumerator CheckSession()
     {
+        string username = PlayerPrefs.GetString("Username");
+
         string url = $"{serverURL}/checkSession";
         WWWForm form = new WWWForm();
-        form.AddField("username", GameManager.instance.myID);
+        form.AddField("username", username);
 
         using (UnityWebRequest request = UnityWebRequest.Post(url, form))
         {
@@ -81,7 +75,7 @@ public class SessionChecker : MonoBehaviour
                 else if (response.message == "auto logout")
                 {
                     Debug.Log("다른 곳에서 로그인");
-                    SceneManager.LoadScene("Main");
+                    SceneManager.LoadScene("login");
                 }
             }
             else

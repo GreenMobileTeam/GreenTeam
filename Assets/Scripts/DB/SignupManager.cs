@@ -19,9 +19,9 @@ public class SignupManager : MonoBehaviour
     public Button signupButn;
 
     public GameObject Checkpopup;
+    public GameObject loginPop;
+    public GameObject signPop;
     public TMP_Text checkText;
-    public GameObject signPen;
-    public GameObject loginPen;
 
     string serverURL = "http://greenacademi.store";
 
@@ -161,14 +161,12 @@ public class SignupManager : MonoBehaviour
 
     public void CheckUserNameButton()
     {
-        if(usernameInput.text != "")
-            StartCoroutine(CheckDuplicate("username", usernameInput));
+        StartCoroutine(CheckDuplicate("username", usernameInput));
     }
 
     public void CheckNickNameButton()
     {
-        if(nicknameInput.text != "")
-            StartCoroutine(CheckDuplicate("nickname", nicknameInput));
+        StartCoroutine(CheckDuplicate("nickname", nicknameInput));
     }
 
     IEnumerator CheckCensorship(string type, TMP_InputField value)
@@ -222,12 +220,8 @@ public class SignupManager : MonoBehaviour
             {
                 if (request.result == UnityWebRequest.Result.Success)
                 {
-                    ServerManager.instance.SendPop("회원가입 성공",1f);
                     Debug.Log("회원가입 성공");
-                    ResetField();
-                    signPen.SetActive(false);
-                    loginPen.SetActive(true);
-                    //ReturnLoginScene();
+                    ReturnLoginScene();
                 }
                 else
                 {
@@ -245,7 +239,10 @@ public class SignupManager : MonoBehaviour
 
     public void ReturnLoginScene()
     {
-        SceneManager.LoadScene("login");
+        signPop.SetActive(false);
+        loginPop.SetActive(true);
+
+        //SceneManager.LoadScene("login");
     }
 
     public void OnUsernameValueChanged()
@@ -268,14 +265,6 @@ public class SignupManager : MonoBehaviour
     public void PopUpClose()
     {
         Checkpopup.SetActive(false);
-    }
-
-    public void ResetField()
-    {
-        usernameInput.text = "";
-        passwordInput.text = "";
-        passwordCheckInput.text = "";
-        nicknameInput.text = "";
     }
 
 }

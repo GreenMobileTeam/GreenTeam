@@ -102,11 +102,6 @@ public class ServerManager : MonoBehaviourPunCallbacks
         StartCoroutine(Notice("접속이 끊겼습니다", 1.2f));
     }
 
-    public void SendPop(string t, float tim)
-    {
-        StartCoroutine(Notice(t,tim));
-    }
-
     IEnumerator Notice(string text, float time)
     {
         //Debug.Log("start");
@@ -170,14 +165,14 @@ public class ServerManager : MonoBehaviourPunCallbacks
 
     void CreatePlayer()
     {
-        string nowC = CharacterManager.instance.currentCharacter.ToString();
-        GameObject pl = Resources.Load(nowC.ToString()) as GameObject;
-        Renderer plR = pl.GetComponentInChildren<Renderer>();
+        string nowC = CharacterManager.instance.currentCharacter.ToString()+"_"+
+            GameManager.instance.myGhostColor.ToString();
+        GameObject pl = Resources.Load(nowC) as GameObject;
         TextMeshProUGUI nameT = pl.GetComponentInChildren<TextMeshProUGUI>();
         nameT.text = myName_;
-        plR.material = Resources.Load(GameManager.instance.myGhostColor.ToString()) as Material;
         GameObject trans = GameObject.Find("SpawnPoint");
         myGhost = PhotonNetwork.Instantiate(nowC, trans.GetComponent<Transform>().position, Quaternion.identity);
+        //photonView.RPC("SyncPlayer", RpcTarget.AllBuffered, myName_);
     }
 
     public bool CheckMaster()  //방장 체크
